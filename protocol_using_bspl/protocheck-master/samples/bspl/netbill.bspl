@@ -1,0 +1,11 @@
+NetBill {
+  roles C, M
+  parameters out ID key, out item, out price, out done
+  private confirmation, document, payment
+  C → M: rfq[out ID, out item]
+  M → C: offer[in ID, in item, out price]
+  C → M: accept[in ID, in item, in price, out confirmation]
+  M → C: goods[in ID, in item, in confirmation, out document]
+  C → M: pay[in ID, in price, in document, out payment]
+  M → C: receipt[in ID, in item, in payment, out done]
+}

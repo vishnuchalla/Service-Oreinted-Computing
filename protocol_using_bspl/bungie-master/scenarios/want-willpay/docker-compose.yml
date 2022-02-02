@@ -1,0 +1,52 @@
+version: "3.7"
+
+services:
+  buyer:
+    build:
+      context: ../..
+      dockerfile: agent.docker
+    image: agent
+    depends_on:
+      - seller
+    expose:
+      - 8000/udp
+    networks:
+      - willpay-net
+    volumes:
+      - type: bind
+        source: ./buyer.py
+        target: /src/buyer.py
+        read_only: true
+      - type: bind
+        source: ./configuration.py
+        target: /src/configuration.py
+        read_only: true
+      - type: bind
+        source: ./want-willpay.bspl
+        target: /src/want-willpay.bspl
+        read_only: true
+    entrypoint: python buyer.py
+
+  seller:
+    image: agent
+    expose:
+      - 8001/udp
+    networks:
+      - willpay-net
+    volumes:
+      - type: bind
+        source: ./seller.py
+        target: /src/seller.py
+        read_only: true
+      - type: bind
+        source: ./configuration.py
+        target: /src/configuration.py
+        read_only: true
+      - type: bind
+        source: ./want-willpay.bspl
+        target: /src/want-willpay.bspl
+        read_only: true
+    entrypoint: python seller.py
+
+networks:
+  willpay-net:

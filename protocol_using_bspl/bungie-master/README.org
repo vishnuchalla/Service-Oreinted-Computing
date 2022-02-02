@@ -1,0 +1,184 @@
+* Bungie
+A simple python-based framework for implementing agents, with additional support for fault-tolerance policies.
+
+** Setup
+Install using the provided setup.py
+#+begin_example
+$ python setup.py develop
+#+end_example
+You may need to install some dependencies like protocheck manually.
+
+** Tutorial
+Bungie provides a /protocol adapter/ for implementing agents that play roles in a BSPL protocol.
+BSPL protocol parsing is provided by the protocheck library (http://gitlab.com/masr/protocheck).
+
+You can run the scenario implementation using the ~start.sh~ script to launch all of the agents at the same time; press any key to kill them and stop the run.
+
+*** Specifying the Protocol
+Our tutorial will follow the Logistics scenario, visible in the scenarios directory.
+
+The protocol could be provided as an object in the python code directly, but it is generally easier to specify it as a separate BSPL file and then load it in the agent.
+The protocol we will be using is as follows, given in logistics.bspl:
+#+begin_src bspl
+Logistics {
+  roles Merchant, Wrapper, Labeler, Packer
+  parameters out orderID key, out itemID key, out item, out status
+  private address, label, wrapping, remID, ackID
+
+  Merchant -> Labeler: RequestLabel[out orderID key, out address]
+  Merchant -> Wrapper: RequestWrapping[in orderID key, out itemID key, out item]
+
+  Wrapper -> Packer: Wrapped[in orderID key, in itemID key, in item, out wrapping]
+  Labeler -> Packer: Labeled[in orderID key, in address, out label]
+
+  Packer -> Merchant: Packed[in orderID key, in itemID key, in item, in wrapping, in label, out status]
+}
+#+end_src
+
+This protocol describes roles for four agents, each of which are implemented in separate python files.
+We will here be focusing on the Merchant, Labeler, and Packer roles.
+
+To load a protocol, we need to import bspl from protocheck, and then load the bspl file as follows:
+#+begin_src python
+from protocheck import bspl
+logistics = bspl.load_file("logistics.bspl").export("Logistics")
+#+end_src
+
+The "export" function converts the bspl protocol into a module, making it easier to access the roles and messages provided.
+For example, the merchant could import its role and messages as follows:
+#+begin_src python
+from Logistics import Merchant, Wrapper, Labeler, Packer
+from Logistics import (
+    RequestLabel,
+    RequestWrapping,
+    Packed,
+)
+#+end_src
+
+*** Configuring the Agent
+After loading its protocol, role, and possibly messages, each agent will need to be configured with information about how to connect to the other agents.
+
+In the logistics scenario, all of this is done in a common configuration.py file that can be loaded by all four of the agents, but they could be configured separately.
+
+#+begin_src python
+config = {
+    Merchant: ("0.0.0.0", 8000),
+    Wrapper: ("0.0.0.0", 8001),
+    Labeler: ("0.0.0.0", 8002),
+    Packer: ("0.0.0.0", 8003),
+}
+#+end_src
+
+The role binding configuration is a single dictionary mapping roles to tuples containing (IP, port) pairs.
+They don't all have to be on the same machine, but in this example we are running them all on localhost (0.0.0.0)
+The configuration that each agent sees for itself identifies what IP address and port it should listen on; 0.0.0.0 is chosen here so that they listen on all IPs known to the host networking system.
+
+*** Setting up the adapter
+Now we need to create python files for each of the agents, and begin to initialize them.
+
+The main component needed in each agent is its /adapter/, which listens for messages and checks them for compliance to the protocol before handling them.
+
+For the merchant:
+#+begin_src python
+from bungie import Adapter
+adapter = Adapter(Merchant, Logistics.protocol, config)
+#+end_src
+
+The adapter is configured with three parameters: role, protocol, and configuration as declared in the previous section.
+
+*** Running the agent
+With an adapter, we have enough to run the agent (though it won't do much yet.)
+#+begin_src python
+if __name__ == "__main__":
+    print("Starting Merchant...")
+    adapter.start()
+#+end_src
+That's it. Now, if you run merchant.py, it will print "Starting Merchant..." and then just sit there.
+Let's make it do something.
+
+*** Acting proactively
+To start an enactment of a protocol, some agent will have to make the first move.
+In Logistics, that's the Merchant, who requests the wrapping and labeling of the items in an order.
+This can be seen from the first message in the protocol, RequestLabel, which has all its parameters labeled ~out~, which means it has no dependencies and can be sent at will.
+
+So, we'll make an order generator that simulates the submission of orders so that the merchant can label them:
+#+begin_src python
+async def order_generator():
+    for orderID in range(10):
+        adapter.send(
+            RequestLabel(
+                orderID=orderID,
+                address=random.sample(["Lancaster University", "NCSU"], 1)[0],
+            )
+        )
+        for i in range(2):
+            adapter.send(
+                RequestWrapping(
+                    orderID=orderID,
+                    itemID=i,
+                    item=random.sample(["ball", "bat", "plate", "glass"], 1)[0],
+                )
+            )
+        await asyncio.sleep(0)
+#+end_src
+
+A lot of new things here:
+- The function is asynchronous, to work with the adapter
+- Messages are constructed by passing in their parameters as keyword arguments
+- The resulting message instances are sent with ~adapter.send(message)~
+- There's an ~asyncio.sleep(0)~ step near the end to make sure it doesn't all happen instantly, possibly breaking something. Remember to import asyncio
+
+Once we have this order generator, we can tell the agent to run it by including it as a parameter to agent.start:
+#+begin_src python
+if __name__ == "__main__":
+    print("Starting Merchant...")
+    adapter.start(order_generator())
+#+end_src
+
+The adapter takes any provided asynchronous tasks, and adds them to its event loop.
+This way you can add any number of proactive tasks to your agent.
+
+*** Adding a reactor
+In most protocols, not all messages are sent independently like RequestLabel.
+Instead, many have dependencies, and may follow a simple request/response pattern.
+That's what we see in the Labeler, which sends Label in response to RequestLabel.
+
+The simplest way to handle reactive patterns like this is via a /reactor/, or function registered as a reaction to the reception of a message:
+
+#+begin_src python
+@adapter.reaction(RequestLabel)
+async def labeled(msg):
+    adapter.send(
+        Labeled(
+            label=str(uuid.uuid4()),
+            ,**msg.payload
+        )
+    )
+#+end_src
+
+This snippet from the Labeler agent (labeler.py) declares the labeled function as an asynchronous reaction to the RequestLabel message.
+It is passed the received RequestLabel instance as its only parameter, and derives from it the new Labeled message.
+Computing the new message is pretty easy, simply bind the out parameters, and copy any in parameters from the previous message.
+
+But some messages require inputs from multiple other messages.
+This can be done with reaction handlers, by storing the information until all prerequisites have been received.
+However, Bungie also offers another option.
+
+*** Using an enablement handler
+The Packer sends the Packed message only once it has received both Wrapped and Labeled, since it needs a label for the order, and wrapping for each item.
+
+The adapter knows from the protocol which information it needs, however, and can invoke a handler when the message becomes /enabled/, called an enablement handler.
+
+#+begin_src python
+@adapter.enabled(Packed)
+async def pack(msg):
+    msg["status"] = "packed"
+    return msg
+#+end_src
+
+This is source from the Packer agent (packer.py), which shows how simple the enablement handler can be.
+Here, the ~pack~ function is registered as a handler for an enabled instance of the Packed message, which is passed in as the only parameter.
+The instance is passed in with all of its ~in~ parameters pre-filled from its prerequisites, with only the ~out~ parameters needing to be set in the body.
+So, we set status to "packed", and return the message for sending.
+
+Deceptively simple compared to the code it saves for remembering the intermediate values from both the Wrapped and Labeled messages.

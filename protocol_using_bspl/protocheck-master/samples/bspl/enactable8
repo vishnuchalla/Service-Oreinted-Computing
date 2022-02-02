@@ -1,0 +1,14 @@
+Enactable8 {
+  roles A, B
+  parameters out ID key, out done
+  private started, step1, step2, step3, step4, step5, step6
+  
+  A -> B: Start[out ID, out started]
+  B -> A: Step1[in ID, in started, out step1]
+  A -> B: Step2[in ID, in step1, out step2]
+  B -> A: Step3[in ID, in step2, out step3]
+  A -> B: Step4[in ID, in step3, out step4]
+  B -> A: Step5[in ID, in step4, out step5]
+  A -> B: Step6[in ID, in step5, out step6]
+  B -> A: Finish[in ID, in step6, out done]
+}

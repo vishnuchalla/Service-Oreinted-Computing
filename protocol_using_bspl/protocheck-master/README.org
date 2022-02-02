@@ -1,0 +1,119 @@
+* Protocheck
+Protocheck is an application designed to verify various correctness properties of protocols defined in the BSPL family of languages.
+
+** Installation
+   Protocheck may eventually be made available through the PyPI package registry, but for now install it directly from github.
+
+*** Prerequisites
+    Protocheck requires python version 3.4 or later, because of one of its dependencies.
+    On Windows, Python 3.6+ is recommended.
+
+*** Install from source (Gitlab)
+    1. Download the source code from gitlab:
+       #+begin_example
+       $ git clone https://gitlab.com/masr/protocheck.git
+       #+end_example
+    2. Optionally create virtual environment for protocheck
+       #+begin_example
+       $ python -m venv venv
+       #+end_example
+    3. Activate virtual environment (do this whenever you start a new shell session)
+       - Linux:
+         #+begin_example
+         $ . venv/bin/activate
+         #+end_example
+       - Windows:
+         #+begin_example
+         $ venv\Scripts\activate.bat
+         #+end_example
+    3. Install package in development mode
+       #+begin_example
+       $ python setup.py develop
+       #+end_example
+
+
+** Usage
+   When installed globally, protocheck provides the 'bspl' entrypoint, that can be used as follows:
+
+   #+begin_example
+SYNOPSIS
+    bspl COMMAND | -
+
+COMMANDS
+    COMMAND is one of the following:
+
+     all-paths
+       Compute all paths for each protocol
+
+     ast
+       Print the parsed AST for the specification in PATH
+
+     check-syntax
+       Parse each file, printing any syntax errors found
+
+     flow
+       Generate a NodeRED flow from a protocol specification
+
+     json
+       Print a JSON representation of each protocol
+
+     liveness
+       Compute whether each protocol is live, using path simulation
+
+     load-file
+       Load a BSPL file, returning a Specification object containing one or more protocols
+
+     refinement
+       Given a specification file and protocol names Q and P, check whether Q refines P
+
+     safety
+       Compute whether each protocol is safe, using path simulation
+
+     sat
+       Commands that use the SAT-solving method.
+       Subcommands:
+         - enactability
+         - safety
+         - liveness
+
+     version
+       Print the currently running version of protocheck
+   #+end_example
+
+   The CLI is implemented using the Fire library, which means that each command supports the "-h" help option to list the possible arguments.
+   Grouped commands, such as those under ~sat~, may inherit arguments from their parent, so check both.
+
+   Fire enables inspection and chaining of function results, such as with the ~load-file~ command for loading a specification.
+   After the specification is loaded, you can inspect its contents and call methods on them, etc.
+
+   Fire can also launch a python shell with various objects available via ~--interactive~.
+   For example, try ~bspl load-file samples/bspl/purchase protocols Purchase--interactive~, and you should get a python REPL with the Purchase protocol loaded in the ~result~ variable.
+
+   There are some example protocol files in the 'samples' directory.
+
+
+** Common Problems
+
+*** UnicodeEncodeError: 'charmap' codec can't encode character '\u2192' in position 5566: character maps to <undefined>
+    Protocheck has support for unicode arrow symbols in the protocol specifications. If your terminal does not support unicode characters, you may need to do one of the following workarounds:
+
+**** Windows
+     Try one of the following:
+     1. Try Python 3.6+, which supposedly resolves the issue
+     2. Run ~set PYTHONIOENCODING=utf-8~ in your shell
+     3. Try the following:
+#+begin_example
+T:\> py -mpip install win-unicode-console
+T:\> py -mrun bspl.py
+#+end_example
+
+**** Other
+     I haven't run into this particular error on linux, except in older versions of python.
+     If you still run into it, try
+#+begin_example
+# export PYTHONIOENCODING="utf-8"
+#+end_example
+
+** Notes
+   - There are probably still some bugs. If you find a case that doesn't work as you expect, please submit an issue.
+   - For easier testing of listings used in latex papers, protocheck will automatically strip latex formatting before parsing a protocol, so they should work without modification.

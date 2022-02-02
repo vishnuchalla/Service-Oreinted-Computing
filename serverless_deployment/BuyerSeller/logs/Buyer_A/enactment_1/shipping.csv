@@ -1,0 +1,35 @@
+message
+"START RequestId: fa173e93-3d8f-4864-b3bc-5144ce984672 Version: $LATEST
+"
+"Online
+"
+"[INFO]	2021-11-21T18:39:43.286Z		Found credentials in environment variables.
+"
+"Received message: {'buyerID': 'buyerID', 'merchantID': 'AXYESSDAS123', 'orderID': 1, 'buyerName': 'buyerName', 'itemName': 'Harry Potter Novel', 'shippingAddress': 'shipping address', 'merchantAccept': True}
+"
+"[INFO]	2021-11-21T18:39:43.378Z	fa173e93-3d8f-4864-b3bc-5144ce984672	Shipping: shipping request received: {""buyerID"": ""buyerID"", ""merchantID"": ""AXYESSDAS123"", ""orderID"": 1, ""buyerName"": ""buyerName"", ""itemName"": ""Harry Potter Novel"", ""shippingAddress"": ""shipping address"", ""merchantAccept"": true}
+"
+"[INFO]	2021-11-21T18:39:43.378Z	fa173e93-3d8f-4864-b3bc-5144ce984672	Shipping: providing the tracking details to the merchant: {'merchantID': 'AXYESSDAS123', 'buyerID': 'buyerID', 'orderID': 1, 'trackingID': 'trackingID'}
+"
+"[INFO]	2021-11-21T18:39:47.529Z	fa173e93-3d8f-4864-b3bc-5144ce984672	Shipping: packing and shipping the item to buyer: {'buyerID': 'buyerID', 'merchantID': 'AXYESSDAS123', 'orderID': 1, 'itemName': 'Harry Potter Novel', 'shippingAddress': 'shipping address'}
+"
+"START RequestId: 063b2262-15b5-48f1-b4d4-5289cbc20e97 Version: $LATEST
+"
+"Online
+"
+"[INFO]	2021-11-21T18:39:48.612Z		Found credentials in environment variables.
+"
+"Received message: {'buyerID': 'buyerID', 'orderID': 1, 'merchantID': 'AXYESSDAS123', 'itemName': 'Harry Potter Novel', 'receivedDate': '11/19/2021'}
+"
+"[INFO]	2021-11-21T18:39:48.696Z	063b2262-15b5-48f1-b4d4-5289cbc20e97	Shipping: Delivery confirmation received from buyer: {'buyerID': 'buyerID', 'orderID': 1, 'merchantID': 'AXYESSDAS123', 'itemName': 'Harry Potter Novel', 'receivedDate': '11/19/2021'}
+"
+"[INFO]	2021-11-21T18:39:48.696Z	063b2262-15b5-48f1-b4d4-5289cbc20e97	Shipping: sending delivery confirmation to the merchant: {'merchantID': 'AXYESSDAS123', 'buyerID': 'buyerID', 'orderID': 1, 'receivedDate': '11/19/2021', 'deliveryConfirmation': 'delivery confirmation', 'trackingID': 'trackingID'}
+"
+"END RequestId: 063b2262-15b5-48f1-b4d4-5289cbc20e97
+"
+"REPORT RequestId: 063b2262-15b5-48f1-b4d4-5289cbc20e97	Duration: 1170.93 ms	Billed Duration: 1171 ms	Memory Size: 1024 MB	Max Memory Used: 70 MB	Init Duration: 797.39 ms	
+"
+"END RequestId: fa173e93-3d8f-4864-b3bc-5144ce984672
+"
+"REPORT RequestId: fa173e93-3d8f-4864-b3bc-5144ce984672	Duration: 6505.19 ms	Billed Duration: 6506 ms	Memory Size: 1024 MB	Max Memory Used: 70 MB	Init Duration: 810.62 ms	
+"

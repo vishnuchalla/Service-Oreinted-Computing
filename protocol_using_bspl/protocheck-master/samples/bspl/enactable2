@@ -1,0 +1,8 @@
+Enactable2 {
+  roles A, B
+  parameters out ID key, out done
+  private a
+  
+  A -> B: Start[out ID, out a]
+  B -> A: Finish[in ID, in a, out done]
+}

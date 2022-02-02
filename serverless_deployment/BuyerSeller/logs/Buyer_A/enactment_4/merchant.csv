@@ -1,0 +1,25 @@
+message
+"[INFO]	2021-11-21T20:31:34.355Z	396517aa-f864-47bb-ba6f-717106bd0cad	Merchant: Quote request received: {""buyerID"": ""buyerID"", ""orderID"": 4, ""itemName"": ""Electric Scooter"", ""buyerName"": ""buyerName"", ""merchantID"": ""AXYESSDAS123""}
+"
+"[INFO]	2021-11-21T20:31:34.355Z	396517aa-f864-47bb-ba6f-717106bd0cad	Merchant: Sending quote to the buyer: {'orderID': 4, 'buyerID': 'buyerID', 'itemName': 'Electric Scooter', 'buyerName': 'buyerName', 'quote': 'quote'}
+"
+"[INFO]	2021-11-21T20:31:34.590Z	7f85e005-b654-4e7f-8c3b-66e726b4d295	Merchant: Received buyer acceptance: {""orderID"": 4, ""buyerID"": ""buyerID"", ""quote"": ""quote"", ""buyerAccept"": ""buyerAcceptance""}
+"
+"[INFO]	2021-11-21T20:31:34.685Z	3537e7ba-3d59-47b1-8d04-6fd133e6a985	Merchant: Received order {""orderID"": 4, ""buyerID"": ""buyerID"", ""itemName"": ""Electric Scooter"", ""buyerName"": ""buyerName"", ""shippingAddress"": ""shipping address""} but pending payment
+"
+"[INFO]	2021-11-21T20:31:34.685Z	3537e7ba-3d59-47b1-8d04-6fd133e6a985	Merchant: Sending pending payment notification to buyer: {'orderID': 4, 'buyerID': 'buyerID', 'itemName': 'Electric Scooter', 'buyerName': 'buyerName', 'onHold': True}
+"
+"[INFO]	2021-11-21T20:31:34.940Z	d750ee03-b45e-44c5-baa0-7239636c36bd	Merchant: Received payment for the order: {""orderID"": 4, ""buyerID"": ""buyerID"", ""itemName"": ""Electric Scooter"", ""itemPrice"": ""100USD"", ""paymentDone"": true}
+"
+"[INFO]	2021-11-21T20:31:34.943Z	d750ee03-b45e-44c5-baa0-7239636c36bd	Merchant: Accepting the order
+"
+"[INFO]	2021-11-21T20:31:34.943Z	d750ee03-b45e-44c5-baa0-7239636c36bd	Merchant: Sending order acceptance to buyer: {'buyerID': 'buyerID', 'orderID': 4, 'itemName': 'Electric Scooter', 'itemPrice': '100USD', 'shippingAddress': 'shipping address', 'merchantAccept': True}
+"
+"[INFO]	2021-11-21T20:31:37.095Z	d750ee03-b45e-44c5-baa0-7239636c36bd	Merchant: Sending the order for shipping: {'buyerID': 'buyerID', 'merchantID': 'AXYESSDAS123', 'orderID': 4, 'buyerName': 'buyerName', 'itemName': 'Electric Scooter', 'shippingAddress': 'shipping address', 'merchantAccept': True}
+"
+"[INFO]	2021-11-21T20:31:37.383Z	b822a74f-daaa-4149-825b-d80823d03274	Merchant: Received defective item report from shipping: {""merchantID"": ""AXYESSDAS123"", ""orderID"": 4, ""itemName"": ""Electric Scooter"", ""defectFound"": true}
+"
+"[INFO]	2021-11-21T20:31:37.384Z	b822a74f-daaa-4149-825b-d80823d03274	Merchant: notifying buyer about defective item: {'buyerID': 'buyerID', 'orderID': 4, 'itemName': 'Electric Scooter', 'defectFound': True}
+"
+"[INFO]	2021-11-21T20:31:37.472Z	b822a74f-daaa-4149-825b-d80823d03274	Merchant: refunding buyer for the defective item: {'buyerID': 'buyerID', 'orderID': 4, 'itemPrice': '100USD', 'defectFound': True, 'defectiveRefund': '100USD'}
+"

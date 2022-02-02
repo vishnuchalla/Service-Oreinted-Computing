@@ -1,0 +1,56 @@
+message
+"[INFO]	2021-11-21T20:25:59.379Z	6ff81a58-ba11-4d37-8f79-a9c3da87f2f3	{'eventID': '593d57f0cf9e7f1005b9899fff1cfabe', 'eventName': 'INSERT', 'eventVersion': '1.1', 'eventSource': 'aws:dynamodb', 'awsRegion': 'us-east-1', 'dynamodb': {'ApproximateCreationDateTime': 1637526359.0, 'Keys': {'orderID': {'N': '3'}}, 'NewImage': {'itemName': {'S': 'Spectrum TV'}, 'merchantID': {'S': 'AXYESSDAS123'}, 'orderID': {'N': '3'}}, 'SequenceNumber': '746400000000022761354432', 'SizeBytes': 59, 'StreamViewType': 'NEW_IMAGE'}, 'eventSourceARN': 'arn:aws:dynamodb:us-east-1:655663872991:table/Orders/stream/2021-11-21T16:08:06.668'}
+"
+"[INFO]	2021-11-21T20:25:59.379Z	6ff81a58-ba11-4d37-8f79-a9c3da87f2f3	Buyer: Found order: {'itemName': 'Spectrum TV', 'merchantID': 'AXYESSDAS123', 'orderID': 3}
+"
+"[INFO]	2021-11-21T20:25:59.379Z	6ff81a58-ba11-4d37-8f79-a9c3da87f2f3	Buyer: Sending requestQuote to merchant: {'buyerID': 'buyerID', 'orderID': 3, 'itemName': 'Spectrum TV', 'buyerName': 'buyerName', 'merchantID': 'AXYESSDAS123'}
+"
+"[INFO]	2021-11-21T20:25:59.424Z	6ff81a58-ba11-4d37-8f79-a9c3da87f2f3	Buyer: requestQuote sent: {""buyerID"": ""buyerID"", ""orderID"": 3, ""itemName"": ""Spectrum TV"", ""buyerName"": ""buyerName"", ""merchantID"": ""AXYESSDAS123""}
+"
+message
+"[INFO]	2021-11-21T20:19:44.090Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:19:44.175Z	504373a3-0c4b-44cb-937c-7a1db802271e	Buyer: Quote received from merchant: {""orderID"": 2, ""buyerID"": ""buyerID"", ""itemName"": ""Laptop Mac Book Air"", ""buyerName"": ""buyerName"", ""quote"": ""quote""}
+"
+"[INFO]	2021-11-21T20:19:44.175Z	504373a3-0c4b-44cb-937c-7a1db802271e	Buyer: Sending acceptance: {'orderID': 2, 'buyerID': 'buyerID', 'quote': 'quote', 'buyerAccept': 'buyerAcceptance'}
+"
+"[INFO]	2021-11-21T20:19:45.318Z	504373a3-0c4b-44cb-937c-7a1db802271e	Buyer: Placing the order: {'orderID': 2, 'buyerID': 'buyerID', 'itemName': 'Laptop Mac Book Air', 'buyerName': 'buyerName', 'shippingAddress': 'shipping address'}
+"
+"[INFO]	2021-11-21T20:19:46.548Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:19:46.645Z	32eeab17-add3-4bce-9fe8-1acbbeafb63b	Buyer: pending payment notification received: {""orderID"": 2, ""buyerID"": ""buyerID"", ""itemName"": ""Laptop Mac Book Air"", ""buyerName"": ""buyerName"", ""onHold"": true}
+"
+"[INFO]	2021-11-21T20:19:46.645Z	32eeab17-add3-4bce-9fe8-1acbbeafb63b	Buyer: Submitting payment for the order: {'orderID': 2, 'buyerID': 'buyerID', 'itemName': 'Laptop Mac Book Air', 'itemPrice': '100USD', 'paymentDone': True}
+"
+"[INFO]	2021-11-21T20:19:48.849Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:19:48.943Z	26141df3-da47-4d06-82c8-d94d559cd478	Buyer: Order accepted by merchant: {""buyerID"": ""buyerID"", ""orderID"": 2, ""itemName"": ""Laptop Mac Book Air"", ""itemPrice"": ""100USD"", ""shippingAddress"": ""shipping address"", ""merchantAccept"": true}
+"
+"[INFO]	2021-11-21T20:19:48.943Z	26141df3-da47-4d06-82c8-d94d559cd478	Buyer: Cancelling the order: {'orderID': 2, 'buyerID': 'buyerID', 'isCancelled': True}
+"
+"[INFO]	2021-11-21T20:19:51.057Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:25:59.747Z	cbecfc17-ce9f-4a30-8d04-a80bfecdda19	Buyer: Quote received from merchant: {""orderID"": 3, ""buyerID"": ""buyerID"", ""itemName"": ""Spectrum TV"", ""buyerName"": ""buyerName"", ""quote"": ""quote""}
+"
+"[INFO]	2021-11-21T20:25:59.748Z	cbecfc17-ce9f-4a30-8d04-a80bfecdda19	Buyer: Sending acceptance: {'orderID': 3, 'buyerID': 'buyerID', 'quote': 'quote', 'buyerAccept': 'buyerAcceptance'}
+"
+"[INFO]	2021-11-21T20:25:59.876Z	cbecfc17-ce9f-4a30-8d04-a80bfecdda19	Buyer: Placing the order: {'orderID': 3, 'buyerID': 'buyerID', 'itemName': 'Spectrum TV', 'buyerName': 'buyerName', 'shippingAddress': 'shipping address'}
+"
+"[INFO]	2021-11-21T20:26:00.118Z	586820f3-78d7-4fa9-9aa8-8bf789aef07f	Buyer: pending payment notification received: {""orderID"": 3, ""buyerID"": ""buyerID"", ""itemName"": ""Spectrum TV"", ""buyerName"": ""buyerName"", ""onHold"": true}
+"
+"[INFO]	2021-11-21T20:26:00.118Z	586820f3-78d7-4fa9-9aa8-8bf789aef07f	Buyer: Submitting payment for the order: {'orderID': 3, 'buyerID': 'buyerID', 'itemName': 'Spectrum TV', 'itemPrice': '100USD', 'paymentDone': True}
+"
+"[INFO]	2021-11-21T20:26:02.551Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:26:02.640Z	149528da-c571-4466-b86b-b0c0890245d2	Buyer: Order accepted by merchant: {""buyerID"": ""buyerID"", ""orderID"": 3, ""itemName"": ""Spectrum TV"", ""itemPrice"": ""100USD"", ""shippingAddress"": ""shipping address"", ""merchantAccept"": true}
+"
+"[INFO]	2021-11-21T20:26:07.130Z	ca175430-72ab-46fb-8033-9acfb0dcd2a9	Buyer: Tracking information received from merchant: {'buyerID': 'buyerID', 'orderID': 3, 'trackingID': 'trackingID', 'shippingStatus': 'shipping status'}
+"
+"[INFO]	2021-11-21T20:26:10.257Z	c8682744-0592-4265-9eae-0a640eb4cd56	Buyer: Receiving item from shipping service: {'buyerID': 'buyerID', 'merchantID': 'AXYESSDAS123', 'orderID': 3, 'itemName': 'Spectrum TV', 'shippingAddress': 'shipping address'}
+"
+"[INFO]	2021-11-21T20:26:10.257Z	c8682744-0592-4265-9eae-0a640eb4cd56	Buyer: Confirming the delivery to the shipping: {'buyerID': 'buyerID', 'orderID': 3, 'merchantID': 'AXYESSDAS123', 'itemName': 'Spectrum TV', 'receivedDate': '11/19/2021'}
+"
+"[INFO]	2021-11-21T20:26:12.571Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:26:12.664Z	37cd636b-5a54-44ae-853c-faf81d591ac2	Buyer: delivery reminding message received from merchant: {'buyerID': 'buyerID', 'orderID': 3, 'trackingID': 'trackingID', 'deliveryConfirmation': 'delivery confirmation', 'remindMessage': 'reminder message to buyer'}
+"

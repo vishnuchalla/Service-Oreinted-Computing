@@ -1,0 +1,3 @@
+Buyer: https://a766svj63e.execute-api.us-east-1.amazonaws.com/buyer/messages
+Merchant: https://a766svj63e.execute-api.us-east-1.amazonaws.com/merchant/messages
+Shipping:  https://a766svj63e.execute-api.us-east-1.amazonaws.com/shipping/messages

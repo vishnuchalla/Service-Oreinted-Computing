@@ -1,0 +1,11 @@
+protocol Independent {
+  roles A, B
+  parameters out ID key, out done
+  private a, b, c
+
+  A -> B: start[out ID key]
+  B -> A: indep1[in ID, out a]
+  B -> A: indep2[in ID, out b]
+  B -> A: indep3[in ID, out c]
+  A -> B: stop[in ID, in a, in b, in c, out done]
+}

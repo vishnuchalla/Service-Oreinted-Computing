@@ -1,0 +1,6 @@
+Enactable1 {
+  roles A, B
+  parameters out ID key, out done
+  
+  A -> B: Start[out ID, out done]
+}

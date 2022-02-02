@@ -1,0 +1,21 @@
+Buyer-A Testing
+
+// Happy path case
+curl -X POST -H 'Content-Type: application/json' https://a766svj63e.execute-api.us-east-1.amazonaws.com/orders -d '{"orderID": 1, "merchantID": "AXYESSDAS123", "itemName":"Harry Potter Novel"}'
+
+// Cancel order before the item is sent for shipping
+curl -X POST -H 'Content-Type: application/json' https://a766svj63e.execute-api.us-east-1.amazonaws.com/orders -d '{"orderID": 1, "merchantID": "AXYESSDAS123", "itemName":"Harry Potter Novel"}'
+
+// Cancel order after the item has been sent for shipping
+curl -X POST -H 'Content-Type: application/json' https://a766svj63e.execute-api.us-east-1.amazonaws.com/orders -d '{"orderID": 1, "merchantID": "AXYESSDAS123", "itemName":"Harry Potter Novel"}'
+
+// Defective item case
+curl -X POST -H 'Content-Type: application/json' https://a766svj63e.execute-api.us-east-1.amazonaws.com/orders -d '{"orderID": 1, "merchantID": "AXYESSDAS123", "itemName":"Harry Potter Novel"}'
+
+Buyer-B Testing
+
+// Happy path case
+curl -X POST -H 'Content-Type: application/json' https://a766svj63e.execute-api.us-east-1.amazonaws.com/orders -d '{"orderID": 1, "merchantID": "AXYESSDAS123", "itemName":"Harry Potter Novel"}'
+
+// Order rejected by merchant due to stock outage case
+curl -X POST -H 'Content-Type: application/json' https://a766svj63e.execute-api.us-east-1.amazonaws.com/orders -d '{"orderID": 1, "merchantID": "AXYESSDAS123", "itemName":"Harry Potter Novel"}'

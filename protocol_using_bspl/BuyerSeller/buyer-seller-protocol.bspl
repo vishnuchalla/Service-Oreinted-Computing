@@ -1,0 +1,57 @@
+protocol BuyerSeller{
+    $\msf{roles}$ Buyer, eBay, Paypal, Merchant, Shipping
+    $\msf{parameters}$ out buyerID, out orderID key, out merchantID, out trackingID
+    private out itemName, 
+    out buyerName,
+    out isCancelled,
+    out buyerReviewMessage, 
+    out onHold,
+    out merchantAccept,
+    out merchantReject,
+    out cancelledRefund,
+    out defectiveRefund,
+    out merchantReviewMessage,
+    out buyerAddress,
+    out itemPrice,
+    out deliveryConfirmation,
+    out defectFound,
+    out paymentDone,
+    out buyerReviewDone,
+    out merchantReviewDone,
+    out releaseHold,
+    out shippingStatus,
+    out cancelledNotification
+
+    Buyer $\mapsto$ eBay: placeOrder[out buyerID, out orderID, out itemName, out buyerAddress, out buyerName]
+    Buyer $\mapsto$ eBay: cancelOrder[in buyerID, in orderID, out isCancelled]
+    Buyer $\mapsto$ eBay: submitPayment[in buyerID, in orderID, out itemPrice, out paymentDone]
+    Buyer $\mapsto$ eBay: submitBuyerReview[in buyerID, in orderID, out buyerReviewMessage, out buyerReviewDone]
+    Buyer $\mapsto$ Shipping: receiveItem[in buyerID, in merchantID, in orderID, in itemName, out deliveryConfirmation]
+
+    eBay $\mapsto$ Merchant: submitOrder[in buyerID, in buyerName, in orderID, in itemName, in itemPrice, in buyerAddress, out merchantID]
+    eBay $\mapsto$ Paypal: paymentRequest[in merchantID, in itemPrice, in orderID, out onHold]
+    eBay $\mapsto$ Paypal: initiateReleasePayment[in merchantID, in orderID, in deliveryConfirmation, out releaseHold]
+    eBay $\mapsto$ Buyer: notifyBuyerAboutShipping[in buyerID, in orderID, in trackingID, out shippingStatus]
+    eBay $\mapsto$ Paypal: initiateRefundForCancelledOrder[in buyerID, in orderID, in itemPrice, out cancelledRefund]
+    eBay $\mapsto$ Paypal: initiateRefundForDefectiveItem[in buyerID, in orderID, in itemPrice, in defectFound, out defectiveRefund]
+    eBay $\mapsto$ Merchant: notifyCancelledOrder[in buyerID, in merchantID, in orderID, in isCancelled, out cancelledNotification]
+    eBay $\mapsto$ Buyer: orderRejection[in buyerID, in orderID, in itemName, in merchantID, in merchantReject]
+
+    Paypal $\mapsto$ Merchant: notifyMerchantAboutPayment[in merchantID, in orderID, in itemPrice, in onHold]
+    Paypal $\mapsto$ Buyer: doRefundForCancelledOrder[in buyerID, in orderID, in itemPrice, in cancelledRefund]
+    Paypal $\mapsto$ Buyer: doRefundForDefectiveItem[in buyerID, in orderID, in itemPrice, in defectiveRefund]
+    Paypal $\mapsto$ Merchant: releasePayment[in merchantID, in itemPrice, in orderID, in releaseHold, in deliveryConfirmation]
+
+    Merchant $\mapsto$ eBay: acceptOrder[in buyerID, in orderID, in itemName, in buyerAddress, out merchantAccept]
+    Merchant $\mapsto$ eBay: rejectOrder[in buyerID, in orderID, in itemName, in buyerAddress, out merchantReject]
+    Merchant $\mapsto$ Shipping: sendToShipping[in buyerID, in merchantID, in buyerName, in orderID, in itemName, in buyerAddress, in merchantAccept]
+    Merchant $\mapsto$ eBay: uploadTrackingDetails[in buyerID, in merchantID, in orderID, in trackingID]
+    Merchant $\mapsto$ eBay: receiveDeliveryConfirmation[in merchantID, in buyerID, in orderID, in trackingID, in deliveryConfirmation]
+    Merchant $\mapsto$ eBay: notifyDefectiveItem[in buyerID, in orderID, in itemName, in defectFound]
+    Merchant $\mapsto$ eBay: submitMerchantReview[in merchantID, in orderID, out merchantReviewMessage, out merchantReviewDone]
+
+    Shipping $\mapsto$ Buyer: packAndShipItem[in buyerID, in merchantID, in orderID, in itemName, in buyerAddress]
+    Shipping $\mapsto$ Merchant: provideTrackingInfo[in merchantID, in buyerID, in orderID, out trackingID]
+    Shipping $\mapsto$ Merchant: sendDeliveryConfirmation[in merchantID, in buyerID, in orderID, in trackingID, in deliveryConfirmation]
+    Shipping $\mapsto$ Merchant: reportDefectiveItem[in merchantID, in orderID, in itemName, out defectFound]
+}

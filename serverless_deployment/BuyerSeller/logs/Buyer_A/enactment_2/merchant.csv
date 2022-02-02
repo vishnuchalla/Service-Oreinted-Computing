@@ -1,0 +1,33 @@
+message
+"[INFO]	2021-11-21T20:19:42.952Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:19:43.039Z	15239d1d-b15e-4adf-a64d-ff33a6ec93b5	Merchant: Quote request received: {""buyerID"": ""buyerID"", ""orderID"": 2, ""itemName"": ""Laptop Mac Book Air"", ""buyerName"": ""buyerName"", ""merchantID"": ""AXYESSDAS123""}
+"
+"[INFO]	2021-11-21T20:19:43.039Z	15239d1d-b15e-4adf-a64d-ff33a6ec93b5	Merchant: Sending quote to the buyer: {'orderID': 2, 'buyerID': 'buyerID', 'itemName': 'Laptop Mac Book Air', 'buyerName': 'buyerName', 'quote': 'quote'}
+"
+"[INFO]	2021-11-21T20:19:45.226Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:19:45.313Z	3e64b763-d72b-4485-9cdf-acac1a1dc305	Merchant: Received buyer acceptance: {""orderID"": 2, ""buyerID"": ""buyerID"", ""quote"": ""quote"", ""buyerAccept"": ""buyerAcceptance""}
+"
+"[INFO]	2021-11-21T20:19:45.415Z	e10e4b84-c11a-4097-9a2c-0dd159c5bf89	Merchant: Received order {""orderID"": 2, ""buyerID"": ""buyerID"", ""itemName"": ""Laptop Mac Book Air"", ""buyerName"": ""buyerName"", ""shippingAddress"": ""shipping address""} but pending payment
+"
+"[INFO]	2021-11-21T20:19:45.415Z	e10e4b84-c11a-4097-9a2c-0dd159c5bf89	Merchant: Sending pending payment notification to buyer: {'orderID': 2, 'buyerID': 'buyerID', 'itemName': 'Laptop Mac Book Air', 'buyerName': 'buyerName', 'onHold': True}
+"
+"[INFO]	2021-11-21T20:19:47.693Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:19:47.790Z	080e61d1-7fbe-47a5-9f22-8a15ac769468	Merchant: Received payment for the order: {""orderID"": 2, ""buyerID"": ""buyerID"", ""itemName"": ""Laptop Mac Book Air"", ""itemPrice"": ""100USD"", ""paymentDone"": true}
+"
+"[INFO]	2021-11-21T20:19:47.790Z	080e61d1-7fbe-47a5-9f22-8a15ac769468	Merchant: Accepting the order
+"
+"[INFO]	2021-11-21T20:19:47.790Z	080e61d1-7fbe-47a5-9f22-8a15ac769468	Merchant: Sending order acceptance to buyer: {'buyerID': 'buyerID', 'orderID': 2, 'itemName': 'Laptop Mac Book Air', 'itemPrice': '100USD', 'shippingAddress': 'shipping address', 'merchantAccept': True}
+"
+"[INFO]	2021-11-21T20:19:49.960Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:19:50.058Z	8084cdd6-50f9-49ab-84a1-4279e89b5ed8	Merchant: Received cancel order request from buyer: {""orderID"": 2, ""buyerID"": ""buyerID"", ""isCancelled"": true}
+"
+"[INFO]	2021-11-21T20:19:50.058Z	8084cdd6-50f9-49ab-84a1-4279e89b5ed8	Merchant: Cancelling the order as it is not yet sent for shipping
+"
+"[INFO]	2021-11-21T20:19:50.058Z	8084cdd6-50f9-49ab-84a1-4279e89b5ed8	Merchant: Performing refund for the cancelled order: {'orderID': 2, 'buyerID': 'buyerID', 'isCancelled': True, 'itemPrice': '100USD', 'cancelledRefund': '100USD'}
+"
+"[INFO]	2021-11-21T20:19:53.169Z	080e61d1-7fbe-47a5-9f22-8a15ac769468	Merchant: Not taking any further action on the order as it is cancelled.
+"

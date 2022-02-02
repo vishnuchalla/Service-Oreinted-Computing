@@ -1,0 +1,3 @@
+Buyer: http://localhost:3000/local/buyer/messages
+Merchant: http://localhost:3000/local/merchant/messages
+Shipping: http://localhost:3000/local/shipping/messages

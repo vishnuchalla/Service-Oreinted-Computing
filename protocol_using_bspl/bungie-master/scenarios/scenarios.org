@@ -1,0 +1,69 @@
+#+TITLE: Scenarios
+
+* Scenario Ideas
+
+Need scenarios that illustrate protocols that are challenging for our previous models, and then find better ways to solve
+
+* Existing models
+
+** Observation Reactor
+Pros:
++ Most universal, since it handles protocol events at a low level
++ Works at the end of an interaction; that is, after the last reception, when no further messages are possible but internal work still needs to be done
+
+Cons:
+- Ties message reception to emission, instead of using the indirect relationships specified in the protocol
+- Only reacts to one message at a time; hard to handle cases when multiple receptions are required for an emission
+
+Unsuited for:
+- Complex interactions, with many inputs required for a given action
+
+** Enabled Message Handlers
+Pros:
+- Decouple message generation logic from its prerequisites
+- Protocol specification used to drive interaction
+- Very little code required to produce a message
+- Works well with correlation of multiple messages to produce a single result message
+- Can handle two mutually exclusive messages at the same time
+
+Cons:
+- Only one message generaated at a time
+- No support for the final message in an interaction; only when there are new steps that can be taken
+- No support for selecting messages from across interactions
+- Little support for handling messages that interfere with each other
+
+Unsuited for:
+- Complex interactions, when one of multiple possible messages should be selected
+- Large interactions, where many responses are completed at once; e.g. telling each bidder whether they won or lost
+
+* Other unsolved concerns
+
+** Multiple instances of initiating message
+If a message has a new key (out key), then it can be sent any number of times.
+Yet, the enabled message store will only have one copy of each enabled message.
+Need a way to instantiate multiple messages from one that has a new key.
+
+* Scenarios
+** Logistics
+Same as existing, but focus on how to initiate new interactions
+Specifically, how to send multiple RequestWrapping messages for each orderID
+
+** Auction
+Objectives:
+- Wait for multiple messages before responding
+- Coordinate responses across interactions
+Design:
+- Many bidders, one auctioneer
+- Simulated with separate bid interactions?
+- Messages:
+  + A -> B: Offer
+  + B -> A: Bid
+  + A -> B: Accept
+  + A -> B: Reject
+- Auctioneer waits until a minimum proportion of bids have been received
+- Auctioneer tells every bidder whether they won or lost
+
+** Implicit Composition
+Objectives:
+- Handle messages from multiple protocols, without composing them into one first
+Design:

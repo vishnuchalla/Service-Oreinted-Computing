@@ -1,0 +1,70 @@
+"
+"[INFO]	2021-11-21T20:31:34.152Z	977f5b37-c918-497b-9e32-d37d10c385c8	Buyer: Found order: {'itemName': 'Electric Scooter', 'merchantID': 'AXYESSDAS123', 'orderID': 4}
+"
+"[INFO]	2021-11-21T20:31:34.152Z	977f5b37-c918-497b-9e32-d37d10c385c8	Buyer: Sending requestQuote to merchant: {'buyerID': 'buyerID', 'orderID': 4, 'itemName': 'Electric Scooter', 'buyerName': 'buyerName', 'merchantID': 'AXYESSDAS123'}
+"
+"[INFO]	2021-11-21T20:31:34.247Z	977f5b37-c918-497b-9e32-d37d10c385c8	Buyer: requestQuote sent: {""buyerID"": ""buyerID"", ""orderID"": 4, ""itemName"": ""Electric Scooter"", ""buyerName"": ""buyerName"", ""merchantID"": ""AXYESSDAS123""}
+"
+message
+"[INFO]	2021-11-21T20:19:44.090Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:19:44.175Z	504373a3-0c4b-44cb-937c-7a1db802271e	Buyer: Quote received from merchant: {""orderID"": 2, ""buyerID"": ""buyerID"", ""itemName"": ""Laptop Mac Book Air"", ""buyerName"": ""buyerName"", ""quote"": ""quote""}
+"
+"[INFO]	2021-11-21T20:19:44.175Z	504373a3-0c4b-44cb-937c-7a1db802271e	Buyer: Sending acceptance: {'orderID': 2, 'buyerID': 'buyerID', 'quote': 'quote', 'buyerAccept': 'buyerAcceptance'}
+"
+"[INFO]	2021-11-21T20:19:45.318Z	504373a3-0c4b-44cb-937c-7a1db802271e	Buyer: Placing the order: {'orderID': 2, 'buyerID': 'buyerID', 'itemName': 'Laptop Mac Book Air', 'buyerName': 'buyerName', 'shippingAddress': 'shipping address'}
+"
+"[INFO]	2021-11-21T20:19:46.548Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:19:46.645Z	32eeab17-add3-4bce-9fe8-1acbbeafb63b	Buyer: pending payment notification received: {""orderID"": 2, ""buyerID"": ""buyerID"", ""itemName"": ""Laptop Mac Book Air"", ""buyerName"": ""buyerName"", ""onHold"": true}
+"
+"[INFO]	2021-11-21T20:19:46.645Z	32eeab17-add3-4bce-9fe8-1acbbeafb63b	Buyer: Submitting payment for the order: {'orderID': 2, 'buyerID': 'buyerID', 'itemName': 'Laptop Mac Book Air', 'itemPrice': '100USD', 'paymentDone': True}
+"
+"[INFO]	2021-11-21T20:19:48.849Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:19:48.943Z	26141df3-da47-4d06-82c8-d94d559cd478	Buyer: Order accepted by merchant: {""buyerID"": ""buyerID"", ""orderID"": 2, ""itemName"": ""Laptop Mac Book Air"", ""itemPrice"": ""100USD"", ""shippingAddress"": ""shipping address"", ""merchantAccept"": true}
+"
+"[INFO]	2021-11-21T20:19:48.943Z	26141df3-da47-4d06-82c8-d94d559cd478	Buyer: Cancelling the order: {'orderID': 2, 'buyerID': 'buyerID', 'isCancelled': True}
+"
+"[INFO]	2021-11-21T20:19:51.057Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:25:59.747Z	cbecfc17-ce9f-4a30-8d04-a80bfecdda19	Buyer: Quote received from merchant: {""orderID"": 3, ""buyerID"": ""buyerID"", ""itemName"": ""Spectrum TV"", ""buyerName"": ""buyerName"", ""quote"": ""quote""}
+"
+"[INFO]	2021-11-21T20:25:59.748Z	cbecfc17-ce9f-4a30-8d04-a80bfecdda19	Buyer: Sending acceptance: {'orderID': 3, 'buyerID': 'buyerID', 'quote': 'quote', 'buyerAccept': 'buyerAcceptance'}
+"
+"[INFO]	2021-11-21T20:25:59.876Z	cbecfc17-ce9f-4a30-8d04-a80bfecdda19	Buyer: Placing the order: {'orderID': 3, 'buyerID': 'buyerID', 'itemName': 'Spectrum TV', 'buyerName': 'buyerName', 'shippingAddress': 'shipping address'}
+"
+"[INFO]	2021-11-21T20:26:00.118Z	586820f3-78d7-4fa9-9aa8-8bf789aef07f	Buyer: pending payment notification received: {""orderID"": 3, ""buyerID"": ""buyerID"", ""itemName"": ""Spectrum TV"", ""buyerName"": ""buyerName"", ""onHold"": true}
+"
+"[INFO]	2021-11-21T20:26:00.118Z	586820f3-78d7-4fa9-9aa8-8bf789aef07f	Buyer: Submitting payment for the order: {'orderID': 3, 'buyerID': 'buyerID', 'itemName': 'Spectrum TV', 'itemPrice': '100USD', 'paymentDone': True}
+"
+"[INFO]	2021-11-21T20:26:02.551Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:26:02.640Z	149528da-c571-4466-b86b-b0c0890245d2	Buyer: Order accepted by merchant: {""buyerID"": ""buyerID"", ""orderID"": 3, ""itemName"": ""Spectrum TV"", ""itemPrice"": ""100USD"", ""shippingAddress"": ""shipping address"", ""merchantAccept"": true}
+"
+"[INFO]	2021-11-21T20:26:07.130Z	ca175430-72ab-46fb-8033-9acfb0dcd2a9	Buyer: Tracking information received from merchant: {'buyerID': 'buyerID', 'orderID': 3, 'trackingID': 'trackingID', 'shippingStatus': 'shipping status'}
+"
+"[INFO]	2021-11-21T20:26:10.257Z	c8682744-0592-4265-9eae-0a640eb4cd56	Buyer: Receiving item from shipping service: {'buyerID': 'buyerID', 'merchantID': 'AXYESSDAS123', 'orderID': 3, 'itemName': 'Spectrum TV', 'shippingAddress': 'shipping address'}
+"
+"[INFO]	2021-11-21T20:26:10.257Z	c8682744-0592-4265-9eae-0a640eb4cd56	Buyer: Confirming the delivery to the shipping: {'buyerID': 'buyerID', 'orderID': 3, 'merchantID': 'AXYESSDAS123', 'itemName': 'Spectrum TV', 'receivedDate': '11/19/2021'}
+"
+"[INFO]	2021-11-21T20:26:12.571Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:26:12.664Z	37cd636b-5a54-44ae-853c-faf81d591ac2	Buyer: delivery reminding message received from merchant: {'buyerID': 'buyerID', 'orderID': 3, 'trackingID': 'trackingID', 'deliveryConfirmation': 'delivery confirmation', 'remindMessage': 'reminder message to buyer'}
+"
+"[INFO]	2021-11-21T20:31:34.486Z	28654694-55d8-40c0-97d3-191219e05b14	Buyer: Quote received from merchant: {""orderID"": 4, ""buyerID"": ""buyerID"", ""itemName"": ""Electric Scooter"", ""buyerName"": ""buyerName"", ""quote"": ""quote""}
+"
+"[INFO]	2021-11-21T20:31:34.486Z	28654694-55d8-40c0-97d3-191219e05b14	Buyer: Sending acceptance: {'orderID': 4, 'buyerID': 'buyerID', 'quote': 'quote', 'buyerAccept': 'buyerAcceptance'}
+"
+"[INFO]	2021-11-21T20:31:34.595Z	28654694-55d8-40c0-97d3-191219e05b14	Buyer: Placing the order: {'orderID': 4, 'buyerID': 'buyerID', 'itemName': 'Electric Scooter', 'buyerName': 'buyerName', 'shippingAddress': 'shipping address'}
+"
+"[INFO]	2021-11-21T20:31:34.813Z	5ab41e14-0088-498f-a50f-fea5a0893ab8	Buyer: pending payment notification received: {""orderID"": 4, ""buyerID"": ""buyerID"", ""itemName"": ""Electric Scooter"", ""buyerName"": ""buyerName"", ""onHold"": true}
+"
+"[INFO]	2021-11-21T20:31:34.813Z	5ab41e14-0088-498f-a50f-fea5a0893ab8	Buyer: Submitting payment for the order: {'orderID': 4, 'buyerID': 'buyerID', 'itemName': 'Electric Scooter', 'itemPrice': '100USD', 'paymentDone': True}
+"
+"[INFO]	2021-11-21T20:31:35.089Z	8655c260-f30d-4827-b9bc-4972103fe321	Buyer: Order accepted by merchant: {""buyerID"": ""buyerID"", ""orderID"": 4, ""itemName"": ""Electric Scooter"", ""itemPrice"": ""100USD"", ""shippingAddress"": ""shipping address"", ""merchantAccept"": true}
+"
+"[INFO]	2021-11-21T20:31:37.467Z	92d724e0-ae09-431e-940b-f84660694635	Buyer: notification received about the defective item: {'buyerID': 'buyerID', 'orderID': 4, 'itemName': 'Electric Scooter', 'defectFound': True}
+"
+"[INFO]	2021-11-21T20:31:37.572Z	54a0001f-f9be-4215-9ecd-c88faed0a948	Buyer: refund received for the defective item: {'buyerID': 'buyerID', 'orderID': 4, 'itemPrice': '100USD', 'defectFound': True, 'defectiveRefund': '100USD'}
+"

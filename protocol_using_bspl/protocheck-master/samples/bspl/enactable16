@@ -1,0 +1,22 @@
+Enactable16 {
+  roles A, B
+  parameters out ID key, out done
+  private started, step1, step2, step3, step4, step5, step6, step7, step8, step9, step10, step11, step12, step13, step14
+  
+  A -> B: Start[out ID, out started]
+  B -> A: Step1[in ID, in started, out step1]
+  A -> B: Step2[in ID, in step1, out step2]
+  B -> A: Step3[in ID, in step2, out step3]
+  A -> B: Step4[in ID, in step3, out step4]
+  B -> A: Step5[in ID, in step4, out step5]
+  A -> B: Step6[in ID, in step5, out step6]
+  B -> A: Step7[in ID, in step6, out step7]
+  A -> B: Step8[in ID, in step7, out step8]
+  B -> A: Step9[in ID, in step8, out step9]
+  A -> B: Step10[in ID, in step9, out step10]
+  B -> A: Step11[in ID, in step10, out step11]
+  A -> B: Step12[in ID, in step11, out step12]
+  B -> A: Step13[in ID, in step12, out step13]
+  A -> B: Step14[in ID, in step13, out step14]
+  B -> A: Finish[in ID, in step14, out done]
+}

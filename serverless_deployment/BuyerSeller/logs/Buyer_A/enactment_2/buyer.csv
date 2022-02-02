@@ -1,0 +1,32 @@
+message
+"[INFO]	2021-11-21T20:19:41.683Z	6f32d8aa-388e-4986-98d0-af3c0c1fff45	{'eventID': 'c1c83daf593c97ef59a3cdbd258484ea', 'eventName': 'INSERT', 'eventVersion': '1.1', 'eventSource': 'aws:dynamodb', 'awsRegion': 'us-east-1', 'dynamodb': {'ApproximateCreationDateTime': 1637525981.0, 'Keys': {'orderID': {'N': '2'}}, 'NewImage': {'itemName': {'S': 'Laptop Mac Book Air'}, 'merchantID': {'S': 'AXYESSDAS123'}, 'orderID': {'N': '2'}}, 'SequenceNumber': '746200000000022761106821', 'SizeBytes': 67, 'StreamViewType': 'NEW_IMAGE'}, 'eventSourceARN': 'arn:aws:dynamodb:us-east-1:655663872991:table/Orders/stream/2021-11-21T16:08:06.668'}
+"
+"[INFO]	2021-11-21T20:19:41.683Z	6f32d8aa-388e-4986-98d0-af3c0c1fff45	Buyer: Found order: {'itemName': 'Laptop Mac Book Air', 'merchantID': 'AXYESSDAS123', 'orderID': 2}
+"
+"[INFO]	2021-11-21T20:19:41.683Z	6f32d8aa-388e-4986-98d0-af3c0c1fff45	Buyer: Sending requestQuote to merchant: {'buyerID': 'buyerID', 'orderID': 2, 'itemName': 'Laptop Mac Book Air', 'buyerName': 'buyerName', 'merchantID': 'AXYESSDAS123'}
+"
+"[INFO]	2021-11-21T20:19:41.729Z	6f32d8aa-388e-4986-98d0-af3c0c1fff45	Buyer: requestQuote sent: {""buyerID"": ""buyerID"", ""orderID"": 2, ""itemName"": ""Laptop Mac Book Air"", ""buyerName"": ""buyerName"", ""merchantID"": ""AXYESSDAS123""}
+"
+message
+"[INFO]	2021-11-21T20:19:44.090Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:19:44.175Z	504373a3-0c4b-44cb-937c-7a1db802271e	Buyer: Quote received from merchant: {""orderID"": 2, ""buyerID"": ""buyerID"", ""itemName"": ""Laptop Mac Book Air"", ""buyerName"": ""buyerName"", ""quote"": ""quote""}
+"
+"[INFO]	2021-11-21T20:19:44.175Z	504373a3-0c4b-44cb-937c-7a1db802271e	Buyer: Sending acceptance: {'orderID': 2, 'buyerID': 'buyerID', 'quote': 'quote', 'buyerAccept': 'buyerAcceptance'}
+"
+"[INFO]	2021-11-21T20:19:45.318Z	504373a3-0c4b-44cb-937c-7a1db802271e	Buyer: Placing the order: {'orderID': 2, 'buyerID': 'buyerID', 'itemName': 'Laptop Mac Book Air', 'buyerName': 'buyerName', 'shippingAddress': 'shipping address'}
+"
+"[INFO]	2021-11-21T20:19:46.548Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:19:46.645Z	32eeab17-add3-4bce-9fe8-1acbbeafb63b	Buyer: pending payment notification received: {""orderID"": 2, ""buyerID"": ""buyerID"", ""itemName"": ""Laptop Mac Book Air"", ""buyerName"": ""buyerName"", ""onHold"": true}
+"
+"[INFO]	2021-11-21T20:19:46.645Z	32eeab17-add3-4bce-9fe8-1acbbeafb63b	Buyer: Submitting payment for the order: {'orderID': 2, 'buyerID': 'buyerID', 'itemName': 'Laptop Mac Book Air', 'itemPrice': '100USD', 'paymentDone': True}
+"
+"[INFO]	2021-11-21T20:19:48.849Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:19:48.943Z	26141df3-da47-4d06-82c8-d94d559cd478	Buyer: Order accepted by merchant: {""buyerID"": ""buyerID"", ""orderID"": 2, ""itemName"": ""Laptop Mac Book Air"", ""itemPrice"": ""100USD"", ""shippingAddress"": ""shipping address"", ""merchantAccept"": true}
+"
+"[INFO]	2021-11-21T20:19:48.943Z	26141df3-da47-4d06-82c8-d94d559cd478	Buyer: Cancelling the order: {'orderID': 2, 'buyerID': 'buyerID', 'isCancelled': True}
+"
+"[INFO]	2021-11-21T20:19:51.057Z		Found credentials in environment variables.
+"

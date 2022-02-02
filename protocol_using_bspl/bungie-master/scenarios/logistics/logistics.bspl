@@ -1,0 +1,13 @@
+Logistics {
+  roles Merchant, Wrapper, Labeler, Packer
+  parameters out orderID key, out itemID key, out item, out status
+  private address, label, wrapping, remID, ackID
+
+  Merchant -> Labeler: RequestLabel[out orderID key, out address]
+  Merchant -> Wrapper: RequestWrapping[in orderID key, out itemID key, out item]
+
+  Wrapper -> Packer: Wrapped[in orderID key, in itemID key, in item, out wrapping]
+  Labeler -> Packer: Labeled[in orderID key, in address, out label]
+
+  Packer -> Merchant: Packed[in orderID key, in itemID key, in item, in wrapping, in label, out status]
+}

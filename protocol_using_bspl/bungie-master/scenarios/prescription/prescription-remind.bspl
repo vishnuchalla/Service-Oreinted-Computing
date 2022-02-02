@@ -1,0 +1,11 @@
+PrescriptionRemind {
+  roles Patient, Doctor, Pharmacist
+  parameters out cID key, out Rx, out package
+  private symptoms, rID
+
+  Patient -> Doctor: Complain[out cID key, out symptoms]
+  Patient -> Doctor: Repeat[in cID key, in symptoms, out rID key]
+
+  Doctor -> Pharmacist: Prescribe[in cID key, in symptoms, out Rx]
+  Pharmacist -> Patient: Filled[in cID key, in Rx, out package]
+}

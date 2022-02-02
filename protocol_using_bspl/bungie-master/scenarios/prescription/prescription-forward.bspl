@@ -1,0 +1,14 @@
+PrescriptionForward {
+  roles Patient, Doctor, Pharmacist
+  parameters out cID key, out Rx, out package
+  private symptoms, rID, copyID, fID
+
+  Patient -> Doctor: Complain[out cID key, out symptoms]
+  Patient -> Doctor: Retry[in cID key, in symptoms, out rID key]
+
+  Doctor -> Pharmacist: Prescribe[in cID key, in symptoms, out Rx]
+  Doctor -> Patient: Copy[in cID key, in Rx, out copyID key]
+  Patient -> Pharmacist: Forward[in cID key, in Rx, out fID key]
+
+  Pharmacist -> Patient: Filled[in cID key, in Rx, out package]
+}

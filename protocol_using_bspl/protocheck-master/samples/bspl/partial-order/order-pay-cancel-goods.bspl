@@ -1,0 +1,14 @@
+protocol Order Pay Cancel Goods {
+  $\msf{roles}$ B, S
+  $\msf{parameters}$ $\msf{out}$ ID key, $\msf{out}$ item, $\msf{out}$ price, $\msf{out}$ outcome
+  $\msf{private}$ pDone, gDone, rescind
+
+  B $\mapsto$ S: order [$\msf{out}$ ID key, $\msf{out}$ item, $\msf{out}$ price]
+
+  B $\mapsto$ S: cancel [$\msf{in}$ ID key, $\msf{nil}$ pDone, nil gDone, $\msf{out}$ rescind]
+  B $\mapsto$ S: pay [$\msf{in}$ ID key, $\msf{in}$ price, $\msf{in}$ item, $\msf{out}$ pDone]
+
+  S $\mapsto$ B: goods [$\msf{in}$ ID key, $\msf{in}$ item, $\msf{nil}$ rescind, $\msf{out}$ gDone]
+  S $\mapsto$ B: cancelAck [$\msf{in}$ ID key, $\msf{in}$ rescind, $\msf{nil}$ gDone, $\msf{out}$ outcome]
+  S $\mapsto$ B: payAck [$\msf{in}$ ID key, $\msf{in}$ pDone, $\msf{out}$ outcome]
+}

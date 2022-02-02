@@ -1,0 +1,5 @@
+message
+"[INFO]	2021-11-21T20:31:37.256Z	8fe6634d-ced0-4627-93e8-dda82adf6f21	Shipping: shipping request received: {""buyerID"": ""buyerID"", ""merchantID"": ""AXYESSDAS123"", ""orderID"": 4, ""buyerName"": ""buyerName"", ""itemName"": ""Electric Scooter"", ""shippingAddress"": ""shipping address"", ""merchantAccept"": true}
+"
+"[INFO]	2021-11-21T20:31:37.256Z	8fe6634d-ced0-4627-93e8-dda82adf6f21	Shipping: reporting defective item to merchant: {'merchantID': 'AXYESSDAS123', 'orderID': 4, 'itemName': 'Electric Scooter', 'defectFound': True}
+"

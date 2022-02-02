@@ -1,0 +1,32 @@
+@@eol_comments :: ?/‌‌#|(//).*?$/?
+
+# Example policy descriptions:
+#
+#  Remind S of Buy until Deliver
+#  Forward Prescription to Patient
+#  Acknowledge Complaint
+
+policy = action:action [delay:delay] [prep:prep events:events] ;
+
+action =
+    | remind
+    | forward
+    | acknowledge
+    | broadcast
+    ;
+
+remind = verb:/[Rr]emind/ recipient:word 'of' messages:messages ;
+forward = verb:/[Ff]orward/ messages:messages 'to' recipient:word ;
+acknowledge = verb:/[Aa]ck(nowledge)?/ messages:messages ;
+broadcast = verb:/[Bb]roadcast/ messages:messages ;
+
+messages = ','.{word} ;
+
+delay = 'after' @:number ['s' | 'second' | 'seconds'] ;
+number = /[-+]?(\d+(\.\d*)?|\.\d+)/ ;
+
+prep = 'until' | 'upon' ;
+events = ('or' | 'and')<{event}+ ;
+event = type:('received' | 'acknowledged') messages:messages ;
+
+word = /[\w@-]+/ ;

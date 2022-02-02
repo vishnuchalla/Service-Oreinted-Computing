@@ -1,0 +1,9 @@
+Prescription {
+  roles Patient, Doctor, Pharmacist
+  parameters out cID key, out Rx, out package
+  private symptoms
+
+  Patient -> Doctor: Complain[out cID key, out symptoms]
+  Doctor -> Pharmacist: Prescribe[in cID key, in symptoms, out Rx]
+  Pharmacist -> Patient: Filled[in cID key, in Rx, out package]
+}

@@ -1,0 +1,13 @@
+FROM python
+ARG SCENARIO
+
+WORKDIR /src
+RUN pip install git+https://gitlab.com/masr/protocheck#egg=protocheck
+RUN pip install aiocron
+RUN pip install pyyaml
+RUN pip install ijson
+RUN pip install aiorun
+RUN pip install uvloop
+RUN pip install argparse
+ADD . /src
+RUN pip install -e .

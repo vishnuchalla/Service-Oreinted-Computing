@@ -1,0 +1,25 @@
+message
+"[INFO]	2021-11-21T20:49:37.177Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:49:37.267Z	e78d1ccf-9342-4667-90a8-598208d41312	Shipping: shipping request received: {""buyerID"": ""buyerID"", ""merchantID"": ""AXYESSDAS123"", ""orderID"": 5, ""buyerName"": ""buyerName"", ""itemName"": ""Micro Oven"", ""shippingAddress"": ""shipping address"", ""merchantAccept"": true}
+"
+"[INFO]	2021-11-21T20:49:37.267Z	e78d1ccf-9342-4667-90a8-598208d41312	Shipping: providing the tracking details to the merchant: {'merchantID': 'AXYESSDAS123', 'buyerID': 'buyerID', 'orderID': 5, 'trackingID': 'trackingID'}
+"
+"[INFO]	2021-11-21T20:49:41.548Z	e78d1ccf-9342-4667-90a8-598208d41312	Shipping: packing and shipping the item to buyer: {'buyerID': 'buyerID', 'merchantID': 'AXYESSDAS123', 'orderID': 5, 'itemName': 'Micro Oven', 'shippingAddress': 'shipping address'}
+"
+"[INFO]	2021-11-21T20:49:42.784Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:49:42.872Z	c505fec5-8349-4970-8c95-725bcd7c9a25	Shipping: Delivery confirmation received from buyer: {'buyerID': 'buyerID', 'orderID': 5, 'merchantID': 'AXYESSDAS123', 'itemName': 'Micro Oven', 'receivedDate': '11/19/2021'}
+"
+"[INFO]	2021-11-21T20:49:42.873Z	c505fec5-8349-4970-8c95-725bcd7c9a25	Shipping: sending delivery confirmation to the merchant: {'merchantID': 'AXYESSDAS123', 'buyerID': 'buyerID', 'orderID': 5, 'receivedDate': '11/19/2021', 'deliveryConfirmation': 'delivery confirmation', 'trackingID': 'trackingID'}
+"
+"[INFO]	2021-11-21T20:51:53.159Z	253ca69d-85ca-4022-8fbe-dfe1b57a6852	Shipping: shipping request received: {""buyerID"": ""buyerID"", ""merchantID"": ""AXYESSDAS123"", ""orderID"": 5, ""buyerName"": ""buyerName"", ""itemName"": ""Micro Oven"", ""shippingAddress"": ""shipping address"", ""merchantAccept"": true}
+"
+"[INFO]	2021-11-21T20:51:53.159Z	253ca69d-85ca-4022-8fbe-dfe1b57a6852	Shipping: providing the tracking details to the merchant: {'merchantID': 'AXYESSDAS123', 'buyerID': 'buyerID', 'orderID': 5, 'trackingID': 'trackingID'}
+"
+"[INFO]	2021-11-21T20:51:56.365Z	253ca69d-85ca-4022-8fbe-dfe1b57a6852	Shipping: packing and shipping the item to buyer: {'buyerID': 'buyerID', 'merchantID': 'AXYESSDAS123', 'orderID': 5, 'itemName': 'Micro Oven', 'shippingAddress': 'shipping address'}
+"
+"[INFO]	2021-11-21T20:51:56.587Z	62f47718-6133-4b72-b1dd-b41c55ac17fa	Shipping: Delivery confirmation received from buyer: {'buyerID': 'buyerID', 'orderID': 5, 'merchantID': 'AXYESSDAS123', 'itemName': 'Micro Oven', 'receivedDate': '11/19/2021'}
+"
+"[INFO]	2021-11-21T20:51:56.588Z	62f47718-6133-4b72-b1dd-b41c55ac17fa	Shipping: sending delivery confirmation to the merchant: {'merchantID': 'AXYESSDAS123', 'buyerID': 'buyerID', 'orderID': 5, 'receivedDate': '11/19/2021', 'deliveryConfirmation': 'delivery confirmation', 'trackingID': 'trackingID'}
+"

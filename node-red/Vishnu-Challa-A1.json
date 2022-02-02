@@ -1,0 +1,2614 @@
+[
+    {
+        "id": "08b7539e1107be27",
+        "type": "tab",
+        "label": "Buyer Workflow",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "63f6b7c015bf72cf",
+        "type": "tab",
+        "label": "Ebay Workflow",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ad1a9c575e2ff759",
+        "type": "tab",
+        "label": "Paypal Workflow",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "b3a2872660e4d0ae",
+        "type": "tab",
+        "label": "Merchant Workflow",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "873b4c40a14e7817",
+        "type": "tab",
+        "label": "Shipping Workflow",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "a90e60abf274a77c",
+        "type": "debug",
+        "z": "08b7539e1107be27",
+        "name": "B:Submit Order",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 290,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "6179a5d24138559e",
+        "type": "inject",
+        "z": "08b7539e1107be27",
+        "name": "Submit Order",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "Order submitted",
+        "payload": "{   \"orderDetails\": {     \"orderID\": \"57AE-0442-0123\",     \"customerID\": \"MDECU9DSC8\",     \"customerName\": \"Some Buyer\",     \"customerEmail\": \"someBuyer@gmail.com\",     \"merchantPartyID\": \"MPDJR834HJ\",     \"merchantName\": \"Some Seller\",     \"merchantEmail\": \"someBuyer@gmail.com\",     \"marketplaceID\": \"ATVPDKIKX0DER\",     \"itemDetails\": [       {         \"lineItemCode\": \"SDFEWDFDSFASDFDNDSFJKDFSDFSDDSFLKJ\",         \"itemName\": \"One Plus Mobile Phone\",         \"asin\": \"DSFGS2342\",         \"sku\": \"3454KJHKJ\",         \"price\": 700,         \"currency\": \"USD\",         \"quantity\": 2       },       {         \"lineItemCode\": \"LKNKJDFHJEMKLJFGKLDSJLKDJFKLDSJFDL\",         \"itemName\": \"One Plus Mobile Phone Case\",         \"asin\": \"SDFWD4828\",         \"sku\": \"ADSFF9834\",         \"price\": 10,         \"currency\": \"USD\",         \"quantity\": 2       }     ]   } }",
+        "payloadType": "json",
+        "x": 130,
+        "y": 180,
+        "wires": [
+            [
+                "a90e60abf274a77c",
+                "06f20b3941f04d83"
+            ]
+        ],
+        "icon": "font-awesome/fa-user-circle-o"
+    },
+    {
+        "id": "aaaeb68127e855bd",
+        "type": "inject",
+        "z": "08b7539e1107be27",
+        "name": "Submit Payment",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "orderState",
+        "payloadType": "global",
+        "x": 140,
+        "y": 260,
+        "wires": [
+            [
+                "bae63f3ad1e00ada"
+            ]
+        ],
+        "icon": "font-awesome/fa-user-circle-o"
+    },
+    {
+        "id": "06f20b3941f04d83",
+        "type": "change",
+        "z": "08b7539e1107be27",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "orderState",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 180,
+        "wires": [
+            [
+                "79186b4216e09bc2"
+            ]
+        ]
+    },
+    {
+        "id": "79186b4216e09bc2",
+        "type": "function",
+        "z": "08b7539e1107be27",
+        "name": "calculate Price",
+        "func": "var orderDetails = msg.payload.orderDetails;\nvar itemDetails = orderDetails.itemDetails;\nvar paymentDetails = {};\ntotalPrice = 0;\nfor (var i = 0; i < itemDetails.length; i++) {\n    totalPrice += itemDetails[i].price * itemDetails[i].quantity;\n}\npaymentDetails.totalPrice = totalPrice;\npaymentDetails.paymentStatus = \"pending\";\norderDetails.status = \"placed\";\norderDetails.reviewStatus = \"pending\";\nmsg.payload.orderDetails = orderDetails;\nmsg.payload.paymentDetails = paymentDetails;\nmsg.topic = \"Added price details to the order\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 180,
+        "wires": [
+            [
+                "4133b6aea463a044",
+                "09634dad4e2930b3"
+            ]
+        ]
+    },
+    {
+        "id": "bae63f3ad1e00ada",
+        "type": "function",
+        "z": "08b7539e1107be27",
+        "name": "processPayment",
+        "func": "if(msg.payload){\n    \n    paymentDetails = msg.payload.paymentDetails;\n    if(paymentDetails.paymentStatus == \"pending\" \n    && paymentDetails.totalPrice > 0){\n        paymentDetails.paymentStatus = \"submitted\";   \n    }\n    else{\n        msg.topic = \"Payment is already submitted. No retries allowed\";\n        return msg;\n    }\n    msg.payload.paymentDetails = paymentDetails;\n    msg.topic = \"Payment submitted for the order\";\n    return msg;\n}\nmsg.topic = \"Please place the order first in order to make a payment\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 260,
+        "wires": [
+            [
+                "b460214eeb3668ab",
+                "756bfbf83c158154"
+            ]
+        ]
+    },
+    {
+        "id": "4133b6aea463a044",
+        "type": "debug",
+        "z": "08b7539e1107be27",
+        "name": "B:Calculated Price",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "b460214eeb3668ab",
+        "type": "debug",
+        "z": "08b7539e1107be27",
+        "name": "B:Payment Submitted",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "7f6554d674729ef8",
+        "type": "inject",
+        "z": "08b7539e1107be27",
+        "name": "Submit Transaction Review",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "orderState",
+        "payloadType": "global",
+        "x": 170,
+        "y": 460,
+        "wires": [
+            [
+                "32cd173eb2619c78"
+            ]
+        ],
+        "icon": "font-awesome/fa-user-circle-o"
+    },
+    {
+        "id": "58b8ae56dc30b748",
+        "type": "function",
+        "z": "63f6b7c015bf72cf",
+        "name": "Receive Order",
+        "func": "var orderDetails = msg.payload.orderDetails;\norderDetails.status = \"Order Received By eBay\";\nmsg.payload.orderDetails = orderDetails;\nmsg.topic = \"Order recieved by eBay and is pending payment\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 340,
+        "wires": [
+            [
+                "eb307cc0018d264b"
+            ]
+        ],
+        "icon": "font-awesome/fa-shopping-cart"
+    },
+    {
+        "id": "5fd3480d8d32ed70",
+        "type": "function",
+        "z": "63f6b7c015bf72cf",
+        "name": "Send Payment to Paypal",
+        "func": "if(msg.payload.paymentDetails.paymentStatus == 'submitted'){\n    var paymentDetails = msg.payload.paymentDetails;\n    paymentDetails.paymentStatus = \"inProcess\"\n    var orderDetails = msg.payload.orderDetails;\n    orderDetails.status = \"inProcess\";\n    msg.payload.paymentDetails = paymentDetails;\n    msg.payload.orderDetails = orderDetails;\n    msg.topic = \"Payment received for order and forwarded to Merchant and Paypal\";\n}\nelse{\n    msg.topic = \"Order delivered to the buyer and paypal hold to be released\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 540,
+        "wires": [
+            [
+                "aa82fec76e50827a",
+                "0678d29606b74feb"
+            ]
+        ],
+        "icon": "font-awesome/fa-shopping-cart"
+    },
+    {
+        "id": "eb307cc0018d264b",
+        "type": "debug",
+        "z": "63f6b7c015bf72cf",
+        "name": "E:eBay Order",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "aa82fec76e50827a",
+        "type": "debug",
+        "z": "63f6b7c015bf72cf",
+        "name": "E:Payment Details",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "336c0913bfa6c006",
+        "type": "change",
+        "z": "63f6b7c015bf72cf",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "paymentStatus",
+                "pt": "global",
+                "to": "payload.paymentDetails.paymentStatus",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "orderState",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 340,
+        "wires": [
+            [
+                "58b8ae56dc30b748"
+            ]
+        ]
+    },
+    {
+        "id": "09634dad4e2930b3",
+        "type": "link out",
+        "z": "08b7539e1107be27",
+        "name": "Order to eBay",
+        "links": [
+            "b9d7d4ac25d6749c",
+            "69edcf48ced80e1d"
+        ],
+        "x": 675,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "9369fa9b2efe29ba",
+        "type": "link out",
+        "z": "08b7539e1107be27",
+        "name": "Payment to eBay",
+        "links": [
+            "75c0f5d32750d913"
+        ],
+        "x": 695,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "b9d7d4ac25d6749c",
+        "type": "link in",
+        "z": "63f6b7c015bf72cf",
+        "name": "Order from Buyer",
+        "links": [
+            "09634dad4e2930b3"
+        ],
+        "x": 175,
+        "y": 340,
+        "wires": [
+            [
+                "336c0913bfa6c006"
+            ]
+        ]
+    },
+    {
+        "id": "75c0f5d32750d913",
+        "type": "link in",
+        "z": "63f6b7c015bf72cf",
+        "name": "Payment from Buyer",
+        "links": [
+            "9369fa9b2efe29ba",
+            "da038585c4324967"
+        ],
+        "x": 175,
+        "y": 540,
+        "wires": [
+            [
+                "65d653cedd570331"
+            ]
+        ]
+    },
+    {
+        "id": "65d653cedd570331",
+        "type": "change",
+        "z": "63f6b7c015bf72cf",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "paymentStatus",
+                "pt": "global",
+                "to": "payload.paymentDetails.paymentStatus",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "orderState",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 540,
+        "wires": [
+            [
+                "5fd3480d8d32ed70"
+            ]
+        ]
+    },
+    {
+        "id": "756bfbf83c158154",
+        "type": "switch",
+        "z": "08b7539e1107be27",
+        "name": "submit",
+        "property": "payload.paymentDetails.paymentStatus",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "submitted",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 570,
+        "y": 260,
+        "wires": [
+            [
+                "9369fa9b2efe29ba"
+            ]
+        ]
+    },
+    {
+        "id": "77480ef96018f806",
+        "type": "change",
+        "z": "ad1a9c575e2ff759",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "paymentStatus",
+                "pt": "global",
+                "to": "payload.paymentDetails.paymentStatus",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "orderState",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 180,
+        "wires": [
+            [
+                "fc705e6ef1476525"
+            ]
+        ]
+    },
+    {
+        "id": "fc705e6ef1476525",
+        "type": "function",
+        "z": "ad1a9c575e2ff759",
+        "name": "Receive fund",
+        "func": "var paymentDetails = msg.payload.paymentDetails;\npaymentDetails.paymentStatus = \"onHold\"\nmsg.payload.paymentDetails = paymentDetails;\nmsg.topic = \"Payment request received from eBay on behalf of merchant. On Hold till the order is delivered.\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 180,
+        "wires": [
+            [
+                "51e56efce360eea1"
+            ]
+        ],
+        "icon": "font-awesome/fa-usd"
+    },
+    {
+        "id": "51e56efce360eea1",
+        "type": "change",
+        "z": "ad1a9c575e2ff759",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "orderState",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "paymentStatus",
+                "pt": "global",
+                "to": "payload.paymentDetails.paymentStatus",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 180,
+        "wires": [
+            [
+                "22cb6ac332f5c062"
+            ]
+        ]
+    },
+    {
+        "id": "22cb6ac332f5c062",
+        "type": "debug",
+        "z": "ad1a9c575e2ff759",
+        "name": "P:Payment onHold",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "2bdbcf3f3cbc2cc8",
+        "type": "change",
+        "z": "ad1a9c575e2ff759",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "orderState",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 380,
+        "wires": [
+            [
+                "eae77b78c1f79ed3"
+            ]
+        ]
+    },
+    {
+        "id": "eae77b78c1f79ed3",
+        "type": "function",
+        "z": "ad1a9c575e2ff759",
+        "name": "Process fund",
+        "func": "var paymentDetails = msg.payload.paymentDetails;\npaymentDetails.paymentStatus = \"Success\";\nmsg.payload.paymentDetails = paymentDetails;\nmsg.topic = \"Payment hold released and credited to the seller account\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 380,
+        "wires": [
+            [
+                "26464c2e306cfaf7"
+            ]
+        ],
+        "icon": "font-awesome/fa-usd"
+    },
+    {
+        "id": "26464c2e306cfaf7",
+        "type": "change",
+        "z": "ad1a9c575e2ff759",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "paymentStatus",
+                "pt": "global",
+                "to": "payload.paymentDetails.paymentStatus",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "orderState",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 380,
+        "wires": [
+            [
+                "a6e288a6c6d095e0",
+                "58e9f77b3a2047bf"
+            ]
+        ]
+    },
+    {
+        "id": "a6e288a6c6d095e0",
+        "type": "debug",
+        "z": "ad1a9c575e2ff759",
+        "name": "P:Payment Success",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "94a366c9066f553e",
+        "type": "link in",
+        "z": "ad1a9c575e2ff759",
+        "name": "Payment request from eBay",
+        "links": [
+            "0d4b75ddb6ca77fe"
+        ],
+        "x": 175,
+        "y": 180,
+        "wires": [
+            [
+                "77480ef96018f806"
+            ]
+        ]
+    },
+    {
+        "id": "4f8704b638d52a15",
+        "type": "link in",
+        "z": "ad1a9c575e2ff759",
+        "name": "Payment trigger on delivery",
+        "links": [
+            "c84e1d8130c7bdac"
+        ],
+        "x": 175,
+        "y": 380,
+        "wires": [
+            [
+                "2bdbcf3f3cbc2cc8"
+            ]
+        ]
+    },
+    {
+        "id": "0d4b75ddb6ca77fe",
+        "type": "link out",
+        "z": "63f6b7c015bf72cf",
+        "name": "Forward order details to paypal and merchant",
+        "links": [
+            "94a366c9066f553e",
+            "30faa225f2e2f96a"
+        ],
+        "x": 875,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "54aeac7dec8a383a",
+        "type": "function",
+        "z": "b3a2872660e4d0ae",
+        "name": "Order Notification",
+        "func": "var orderDetails = msg.payload.orderDetails;\norderDetails.status = \"Preparing the Order\";\nmsg.payload.orderDetails = orderDetails;\nmsg.topic = \"Order notified to seller. Seller starts preparing the order.\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 580,
+        "wires": [
+            [
+                "c35ecda9fae71295",
+                "6daf3620f4710625"
+            ]
+        ],
+        "icon": "font-awesome/fa-user-secret"
+    },
+    {
+        "id": "cfb771f4be542ff5",
+        "type": "function",
+        "z": "b3a2872660e4d0ae",
+        "name": "Send to shipping",
+        "func": "var orderDetails = msg.payload.orderDetails;\norderDetails.status = \"Forwarded to ship\";\nshippingDetails = {};\nshippingDetails.trackingID = \"SDFDS234234\";\nshippingDetails.carrier = \"USPS\";\nshippingDetails.status = \"Not yet dispatched\";\nshippingDetails.fullfillmentCenter = \"Raleigh, USA\";\nmsg.payload.orderDetails = orderDetails;\nmsg.payload.shippingDetails = shippingDetails;\nmsg.topic = \"Order forwarded to shipping.\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 780,
+        "wires": [
+            [
+                "30507f6ed4cf1729",
+                "e06ee656f9a4db7d"
+            ]
+        ],
+        "icon": "font-awesome/fa-user-secret"
+    },
+    {
+        "id": "5355d2554c048d0c",
+        "type": "change",
+        "z": "b3a2872660e4d0ae",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.paymentDetails.paymentStatus",
+                "pt": "msg",
+                "to": "paymentStatus",
+                "tot": "global"
+            },
+            {
+                "t": "set",
+                "p": "orderState",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 780,
+        "wires": [
+            [
+                "cfb771f4be542ff5"
+            ]
+        ]
+    },
+    {
+        "id": "c35ecda9fae71295",
+        "type": "debug",
+        "z": "b3a2872660e4d0ae",
+        "name": "M:Order Notification",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "30507f6ed4cf1729",
+        "type": "debug",
+        "z": "b3a2872660e4d0ae",
+        "name": "M:Shipper Details",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "30faa225f2e2f96a",
+        "type": "link in",
+        "z": "b3a2872660e4d0ae",
+        "name": "eBay to Merchant",
+        "links": [
+            "0d4b75ddb6ca77fe"
+        ],
+        "x": 215,
+        "y": 580,
+        "wires": [
+            [
+                "cfba75a2bdef36ec"
+            ]
+        ]
+    },
+    {
+        "id": "cfba75a2bdef36ec",
+        "type": "change",
+        "z": "b3a2872660e4d0ae",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.paymentDetails.paymentStatus",
+                "pt": "msg",
+                "to": "paymentStatus",
+                "tot": "global"
+            },
+            {
+                "t": "set",
+                "p": "orderState",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 580,
+        "wires": [
+            [
+                "54aeac7dec8a383a"
+            ]
+        ]
+    },
+    {
+        "id": "6daf3620f4710625",
+        "type": "delay",
+        "z": "b3a2872660e4d0ae",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 780,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e06ee656f9a4db7d",
+        "type": "link out",
+        "z": "b3a2872660e4d0ae",
+        "name": "Merchant to shipping",
+        "links": [
+            "1606a6e06ad12117"
+        ],
+        "x": 815,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "de8860f583739d32",
+        "type": "function",
+        "z": "873b4c40a14e7817",
+        "name": "Generate Shipping Label",
+        "func": "var shippingDetails = msg.payload.shippingDetails;\nvar orderDetails = msg.payload.orderDetails;\norderDetails.status = \"In shipping\";\nvar labelDetails = {};\nlabelDetails.labelID = \"XYZ12323G\"\nlabelDetails.labelType = \"MerchantPrepaidLabel\"\nmsg.payload.orderDetails = orderDetails;\nmsg.payload.shippingDetails.labelDetails = labelDetails;\nmsg.topic = \"Generating shipping label\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 160,
+        "wires": [
+            [
+                "b252cb84f30b0bda",
+                "46327d14f3de7f75"
+            ]
+        ],
+        "icon": "font-awesome/fa-truck"
+    },
+    {
+        "id": "b252cb84f30b0bda",
+        "type": "debug",
+        "z": "873b4c40a14e7817",
+        "name": "S:Label Details",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "09a5748b5e179ed7",
+        "type": "function",
+        "z": "873b4c40a14e7817",
+        "name": "Pack And Ship Item",
+        "func": "var shippingDetails = msg.payload.shippingDetails;\nshippingDetails.status = \"Dispatched\"\nvar packageDetails = {};\npackageDetails.dimensions = \"6.43 x 2.9 x 0.34 inches\"\npackageDetails.weight = \"6.8 ounces\"\nshippingDetails.packageDetails = packageDetails;\nmsg.payload.shippingDetails = shippingDetails;\nmsg.topic = \"Packing and shipping the item\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 360,
+        "wires": [
+            [
+                "44f385eb1f5bee5b",
+                "d3aec05967a9efaa"
+            ]
+        ],
+        "icon": "font-awesome/fa-truck"
+    },
+    {
+        "id": "46327d14f3de7f75",
+        "type": "change",
+        "z": "873b4c40a14e7817",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.paymentDetails.paymentStatus",
+                "pt": "msg",
+                "to": "paymentStatus",
+                "tot": "global"
+            },
+            {
+                "t": "set",
+                "p": "orderState",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 820,
+        "y": 160,
+        "wires": [
+            [
+                "c0becfc9dcb91ca7"
+            ]
+        ]
+    },
+    {
+        "id": "44f385eb1f5bee5b",
+        "type": "debug",
+        "z": "873b4c40a14e7817",
+        "name": "S:Package Details",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "c0becfc9dcb91ca7",
+        "type": "delay",
+        "z": "873b4c40a14e7817",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 1000,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d3aec05967a9efaa",
+        "type": "change",
+        "z": "873b4c40a14e7817",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.paymentDetails.paymentStatus",
+                "pt": "msg",
+                "to": "paymentStatus",
+                "tot": "global"
+            },
+            {
+                "t": "set",
+                "p": "orderState",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 360,
+        "wires": [
+            [
+                "ddc18db84131128d"
+            ]
+        ]
+    },
+    {
+        "id": "ddc18db84131128d",
+        "type": "delay",
+        "z": "873b4c40a14e7817",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 880,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8bab24aefe58565d",
+        "type": "debug",
+        "z": "873b4c40a14e7817",
+        "name": "S:In Transit",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "75abd2e3608860a6",
+        "type": "function",
+        "z": "873b4c40a14e7817",
+        "name": "In Transit",
+        "func": "var shippingDetails = msg.payload.shippingDetails;\nshippingDetails.status = \"In transit\"\nmsg.payload.shippingDetails = shippingDetails;\nmsg.topic = \"Item in transit\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 560,
+        "wires": [
+            [
+                "2a9fbcf05fbe2183",
+                "8bab24aefe58565d"
+            ]
+        ],
+        "icon": "font-awesome/fa-truck"
+    },
+    {
+        "id": "384e550830defa8d",
+        "type": "function",
+        "z": "873b4c40a14e7817",
+        "name": "Out for Delivery",
+        "func": "var shippingDetails = msg.payload.shippingDetails;\nshippingDetails.status = \"Out for Delivery\"\nmsg.payload.shippingDetails = shippingDetails;\nmsg.topic = \"Item out for delivery\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 760,
+        "wires": [
+            [
+                "bbf4b163b553e06f",
+                "01d0e32fa13c0965"
+            ]
+        ],
+        "icon": "font-awesome/fa-truck"
+    },
+    {
+        "id": "2a9fbcf05fbe2183",
+        "type": "change",
+        "z": "873b4c40a14e7817",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.paymentDetails.paymentStatus",
+                "pt": "msg",
+                "to": "paymentStatus",
+                "tot": "global"
+            },
+            {
+                "t": "set",
+                "p": "orderState",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 620,
+        "y": 560,
+        "wires": [
+            [
+                "4c0be256d4fcfb2c"
+            ]
+        ]
+    },
+    {
+        "id": "4c0be256d4fcfb2c",
+        "type": "delay",
+        "z": "873b4c40a14e7817",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 800,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bbf4b163b553e06f",
+        "type": "debug",
+        "z": "873b4c40a14e7817",
+        "name": "S:Out for Delivery",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "1b1c02ecbcef4428",
+        "type": "delay",
+        "z": "873b4c40a14e7817",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "4",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 840,
+        "y": 760,
+        "wires": [
+            [
+                "a32da6ce2b2f01e1"
+            ]
+        ]
+    },
+    {
+        "id": "01d0e32fa13c0965",
+        "type": "change",
+        "z": "873b4c40a14e7817",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.paymentDetails.paymentStatus",
+                "pt": "msg",
+                "to": "paymentStatus",
+                "tot": "global"
+            },
+            {
+                "t": "set",
+                "p": "orderState",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 760,
+        "wires": [
+            [
+                "1b1c02ecbcef4428"
+            ]
+        ]
+    },
+    {
+        "id": "f9a4e2cae95ea9d3",
+        "type": "complete",
+        "z": "b3a2872660e4d0ae",
+        "name": "",
+        "scope": [
+            "6daf3620f4710625"
+        ],
+        "uncaught": false,
+        "x": 250,
+        "y": 780,
+        "wires": [
+            [
+                "5355d2554c048d0c"
+            ]
+        ]
+    },
+    {
+        "id": "c0334854f39e2719",
+        "type": "complete",
+        "z": "873b4c40a14e7817",
+        "name": "",
+        "scope": [
+            "c0becfc9dcb91ca7"
+        ],
+        "uncaught": false,
+        "x": 250,
+        "y": 360,
+        "wires": [
+            [
+                "09a5748b5e179ed7"
+            ]
+        ]
+    },
+    {
+        "id": "e8bdc5f8a7a53862",
+        "type": "complete",
+        "z": "873b4c40a14e7817",
+        "name": "",
+        "scope": [
+            "ddc18db84131128d"
+        ],
+        "uncaught": false,
+        "x": 250,
+        "y": 560,
+        "wires": [
+            [
+                "75abd2e3608860a6"
+            ]
+        ]
+    },
+    {
+        "id": "459796bb293f351b",
+        "type": "complete",
+        "z": "873b4c40a14e7817",
+        "name": "",
+        "scope": [
+            "4c0be256d4fcfb2c"
+        ],
+        "uncaught": false,
+        "x": 250,
+        "y": 760,
+        "wires": [
+            [
+                "384e550830defa8d"
+            ]
+        ]
+    },
+    {
+        "id": "1606a6e06ad12117",
+        "type": "link in",
+        "z": "873b4c40a14e7817",
+        "name": "Shipping request from merchant",
+        "links": [
+            "e06ee656f9a4db7d"
+        ],
+        "x": 215,
+        "y": 160,
+        "wires": [
+            [
+                "e38b3eea2fcdd036"
+            ]
+        ]
+    },
+    {
+        "id": "a32da6ce2b2f01e1",
+        "type": "link out",
+        "z": "873b4c40a14e7817",
+        "name": "Deliver Item to buyer",
+        "links": [
+            "1cfe3c5db6bb8732"
+        ],
+        "x": 985,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "1cfe3c5db6bb8732",
+        "type": "link in",
+        "z": "08b7539e1107be27",
+        "name": "Receive item after shipping",
+        "links": [
+            "a32da6ce2b2f01e1"
+        ],
+        "x": 195,
+        "y": 660,
+        "wires": [
+            [
+                "c6fecbd3a67434ac"
+            ]
+        ]
+    },
+    {
+        "id": "c6fecbd3a67434ac",
+        "type": "function",
+        "z": "08b7539e1107be27",
+        "name": "Receive Item",
+        "func": "var orderDetails = msg.payload.orderDetails;\norderDetails.status = \"Delivered\";\nvar shippingDetails = msg.payload.shippingDetails;\nshippingDetails.status = \"Delivered\"\nmsg.payload.shippingDetails = shippingDetails;\nmsg.payload.orderDetails = orderDetails;\nmsg.topic = \"Item delivered to the buyer\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 660,
+        "wires": [
+            [
+                "5a96642b7e26e0ed"
+            ]
+        ],
+        "icon": "font-awesome/fa-user-circle-o"
+    },
+    {
+        "id": "c7bfeb83d9e7c714",
+        "type": "debug",
+        "z": "08b7539e1107be27",
+        "name": "B:Received Item",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "5a96642b7e26e0ed",
+        "type": "change",
+        "z": "08b7539e1107be27",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.paymentDetails.paymentStatus",
+                "pt": "msg",
+                "to": "paymentStatus",
+                "tot": "global"
+            },
+            {
+                "t": "set",
+                "p": "orderState",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 660,
+        "wires": [
+            [
+                "c7bfeb83d9e7c714",
+                "da038585c4324967"
+            ]
+        ]
+    },
+    {
+        "id": "da038585c4324967",
+        "type": "link out",
+        "z": "08b7539e1107be27",
+        "name": "Delivered notification",
+        "links": [
+            "42b62e33dc452a17",
+            "75c0f5d32750d913"
+        ],
+        "x": 675,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "58e9f77b3a2047bf",
+        "type": "link out",
+        "z": "ad1a9c575e2ff759",
+        "name": "Payment notification to merchant",
+        "links": [
+            "c164b9539ff1a4bd"
+        ],
+        "x": 865,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "1287e010915ecd7d",
+        "type": "function",
+        "z": "b3a2872660e4d0ae",
+        "name": "M:Payment Notification",
+        "func": "msg.topic\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 980,
+        "wires": [
+            [
+                "462e48efc73a9b79"
+            ]
+        ],
+        "icon": "font-awesome/fa-user-secret"
+    },
+    {
+        "id": "56cd887615edd205",
+        "type": "change",
+        "z": "b3a2872660e4d0ae",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.paymentDetails.paymentStatus",
+                "pt": "msg",
+                "to": "paymentStatus",
+                "tot": "global"
+            },
+            {
+                "t": "set",
+                "p": "orderState",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 980,
+        "wires": [
+            [
+                "1287e010915ecd7d"
+            ]
+        ]
+    },
+    {
+        "id": "462e48efc73a9b79",
+        "type": "debug",
+        "z": "b3a2872660e4d0ae",
+        "name": "M:Payment Notification",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "c164b9539ff1a4bd",
+        "type": "link in",
+        "z": "b3a2872660e4d0ae",
+        "name": "Payment credit notification from paypal",
+        "links": [
+            "58e9f77b3a2047bf"
+        ],
+        "x": 295,
+        "y": 980,
+        "wires": [
+            [
+                "56cd887615edd205"
+            ]
+        ]
+    },
+    {
+        "id": "32cd173eb2619c78",
+        "type": "function",
+        "z": "08b7539e1107be27",
+        "name": "processReview",
+        "func": "if(msg.payload){\n    \n    orderDetails = msg.payload.orderDetails;\n    if(orderDetails.reviewStatus == \"pending\"){\n        orderDetails.reviewStatus = \"submitted\";   \n    }\n    else{\n        msg.topic = \"Transaction review is already submitted. No retries allowed\";\n        return msg;\n    }\n    msg.payload.orderDetails = orderDetails;\n    msg.topic = \"Transaction review submitted for the order\";\n    return msg;\n}\nmsg.topic = \"Please place the order first in order to submit a transaction review\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 460,
+        "wires": [
+            [
+                "2bcef5f5669e14ca",
+                "1432747b5726f27b"
+            ]
+        ]
+    },
+    {
+        "id": "2bcef5f5669e14ca",
+        "type": "debug",
+        "z": "08b7539e1107be27",
+        "name": "B:Review Submitted",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "9ba0b01a9e7d3b43",
+        "type": "link out",
+        "z": "08b7539e1107be27",
+        "name": "Review to eBay",
+        "links": [
+            "ec5864e71f83d5e1"
+        ],
+        "x": 735,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "1432747b5726f27b",
+        "type": "switch",
+        "z": "08b7539e1107be27",
+        "name": "submit",
+        "property": "payload.orderDetails.reviewStatus",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "submitted",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 610,
+        "y": 460,
+        "wires": [
+            [
+                "9ba0b01a9e7d3b43"
+            ]
+        ]
+    },
+    {
+        "id": "a9c75fe54c4b3d48",
+        "type": "function",
+        "z": "63f6b7c015bf72cf",
+        "name": "Receive Transaction Review",
+        "func": "var orderDetails = msg.payload.orderDetails;\norderDetails.reviewStatus = \"Transaction review updated on eBay site\";\nmsg.payload.orderDetails = orderDetails;\nmsg.topic = \"Transaction review updated on eBay site\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 140,
+        "wires": [
+            [
+                "68677e722842a026"
+            ]
+        ],
+        "icon": "font-awesome/fa-shopping-cart"
+    },
+    {
+        "id": "68677e722842a026",
+        "type": "debug",
+        "z": "63f6b7c015bf72cf",
+        "name": "E:eBay Transaction Review Message",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "ac1fae00ec197a94",
+        "type": "change",
+        "z": "63f6b7c015bf72cf",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "paymentStatus",
+                "pt": "global",
+                "to": "payload.paymentDetails.paymentStatus",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "orderState",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 140,
+        "wires": [
+            [
+                "a9c75fe54c4b3d48"
+            ]
+        ]
+    },
+    {
+        "id": "ec5864e71f83d5e1",
+        "type": "link in",
+        "z": "63f6b7c015bf72cf",
+        "name": "Review from Buyer",
+        "links": [
+            "9ba0b01a9e7d3b43"
+        ],
+        "x": 175,
+        "y": 140,
+        "wires": [
+            [
+                "ac1fae00ec197a94"
+            ]
+        ]
+    },
+    {
+        "id": "a01aaeb1713a38bf",
+        "type": "inject",
+        "z": "b3a2872660e4d0ae",
+        "name": "Update shipping status to buyer",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "orderState",
+        "payloadType": "global",
+        "x": 310,
+        "y": 180,
+        "wires": [
+            [
+                "34d351215a56446a"
+            ]
+        ],
+        "icon": "font-awesome/fa-user-secret"
+    },
+    {
+        "id": "5044f07af9a25acb",
+        "type": "inject",
+        "z": "b3a2872660e4d0ae",
+        "name": "Update shipping status to eBay website",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "orderState",
+        "payloadType": "global",
+        "x": 330,
+        "y": 380,
+        "wires": [
+            [
+                "eb9c142e48e3f741"
+            ]
+        ],
+        "icon": "font-awesome/fa-user-secret"
+    },
+    {
+        "id": "34d351215a56446a",
+        "type": "function",
+        "z": "b3a2872660e4d0ae",
+        "name": "shipping status",
+        "func": "if(msg.payload){\n    if(msg.payload.shippingDetails){\n        shippingStatus = msg.payload.shippingDetails.status;\n        msg.topic = \"Provided shipping status as \" + shippingStatus;\n        return msg;\n    }\n    else{\n        msg.topic = \"The shipping has not yet started. So the status cannot be provided now.\";\n        return msg;\n    }\n}\nelse{\n    msg.topic = \"The order is not yet placed. In order to provide the shipping status the order needs to be placed.\";\n    msg.payload = {};\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 180,
+        "wires": [
+            [
+                "c21f375b00fb7118",
+                "b37ac5c6b45db430"
+            ]
+        ]
+    },
+    {
+        "id": "eb9c142e48e3f741",
+        "type": "function",
+        "z": "b3a2872660e4d0ae",
+        "name": "shipping status",
+        "func": "if(msg.payload){\n    if(msg.payload.shippingDetails){\n        shippingStatus = msg.payload.shippingDetails.status;\n        msg.topic = \"Provided shipping status as \" + shippingStatus;\n        return msg;\n    }\n    else{\n        msg.topic = \"The shipping has not yet started. So the status cannot be provided now.\";\n        return msg;\n    }\n}\nelse{\n    msg.topic = \"The order is not yet placed. In order to provide the shipping status the order needs to be placed.\";\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 380,
+        "wires": [
+            [
+                "0a4ddfd5e11c7c3b",
+                "95d7a2ee207bce76"
+            ]
+        ]
+    },
+    {
+        "id": "0a4ddfd5e11c7c3b",
+        "type": "debug",
+        "z": "b3a2872660e4d0ae",
+        "name": "M:Shipping status to eBay",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "c21f375b00fb7118",
+        "type": "debug",
+        "z": "b3a2872660e4d0ae",
+        "name": "M:Shipping status to buyer",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "eec31eb4fe2dc5d4",
+        "type": "link out",
+        "z": "b3a2872660e4d0ae",
+        "name": "Shipping status to buyer",
+        "links": [
+            "b4341dd2e6c75550"
+        ],
+        "x": 895,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "25b25b03923ebdc0",
+        "type": "link out",
+        "z": "b3a2872660e4d0ae",
+        "name": "Shipping status to eBay",
+        "links": [
+            "8eff17729f9c3a94"
+        ],
+        "x": 955,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "b37ac5c6b45db430",
+        "type": "switch",
+        "z": "b3a2872660e4d0ae",
+        "name": "status",
+        "property": "payload.shippingDetails.status",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 770,
+        "y": 180,
+        "wires": [
+            [
+                "eec31eb4fe2dc5d4"
+            ]
+        ]
+    },
+    {
+        "id": "95d7a2ee207bce76",
+        "type": "switch",
+        "z": "b3a2872660e4d0ae",
+        "name": "status",
+        "property": "msg.payload.shippingDetails.status",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 820,
+        "y": 380,
+        "wires": [
+            [
+                "25b25b03923ebdc0"
+            ]
+        ]
+    },
+    {
+        "id": "b4341dd2e6c75550",
+        "type": "link in",
+        "z": "08b7539e1107be27",
+        "name": "Shipping status from merchant",
+        "links": [
+            "eec31eb4fe2dc5d4"
+        ],
+        "x": 195,
+        "y": 840,
+        "wires": [
+            [
+                "5b96c1fa630121bb"
+            ]
+        ]
+    },
+    {
+        "id": "5b96c1fa630121bb",
+        "type": "debug",
+        "z": "08b7539e1107be27",
+        "name": "B:Shipping status from merchant",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "8eff17729f9c3a94",
+        "type": "link in",
+        "z": "63f6b7c015bf72cf",
+        "name": "Shipping status from merchant",
+        "links": [
+            "25b25b03923ebdc0"
+        ],
+        "x": 175,
+        "y": 620,
+        "wires": [
+            [
+                "3e321c4222e5cc7f"
+            ]
+        ]
+    },
+    {
+        "id": "3e321c4222e5cc7f",
+        "type": "debug",
+        "z": "63f6b7c015bf72cf",
+        "name": "E:Shipping status from merchant",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 410,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "82a6d0a0dd1fdaa2",
+        "type": "complete",
+        "z": "873b4c40a14e7817",
+        "name": "",
+        "scope": [
+            "09a5748b5e179ed7",
+            "75abd2e3608860a6",
+            "384e550830defa8d",
+            "de8860f583739d32"
+        ],
+        "uncaught": false,
+        "x": 250,
+        "y": 960,
+        "wires": [
+            [
+                "5658bc2d24bdcb26"
+            ]
+        ]
+    },
+    {
+        "id": "5658bc2d24bdcb26",
+        "type": "function",
+        "z": "873b4c40a14e7817",
+        "name": "Live tracking info to merchant",
+        "func": "msg.topic = \"Provided tracking info with trackingID \" + msg.payload.shippingDetails.trackingID;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 960,
+        "wires": [
+            [
+                "84f9d6ce6f736421",
+                "b6faf6de0d88764c"
+            ]
+        ],
+        "icon": "font-awesome/fa-truck"
+    },
+    {
+        "id": "84f9d6ce6f736421",
+        "type": "debug",
+        "z": "873b4c40a14e7817",
+        "name": "S:Live tracking info to merchant",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "b6faf6de0d88764c",
+        "type": "link out",
+        "z": "873b4c40a14e7817",
+        "name": "Live tracking info to merchant",
+        "links": [
+            "62b2074038172be0"
+        ],
+        "x": 735,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "62b2074038172be0",
+        "type": "link in",
+        "z": "b3a2872660e4d0ae",
+        "name": "Live tracking info from shipping",
+        "links": [
+            "b6faf6de0d88764c",
+            "8025805d7fe9f8e8"
+        ],
+        "x": 295,
+        "y": 1120,
+        "wires": [
+            [
+                "98d38781387cc586"
+            ]
+        ]
+    },
+    {
+        "id": "98d38781387cc586",
+        "type": "debug",
+        "z": "b3a2872660e4d0ae",
+        "name": "M:Live tracking info from shipping",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 530,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "97554bb4ca6ab8ca",
+        "type": "complete",
+        "z": "873b4c40a14e7817",
+        "name": "",
+        "scope": [
+            "09a5748b5e179ed7",
+            "75abd2e3608860a6",
+            "384e550830defa8d",
+            "de8860f583739d32"
+        ],
+        "uncaught": false,
+        "x": 250,
+        "y": 1160,
+        "wires": [
+            [
+                "f21b283ccfcb51e7"
+            ]
+        ]
+    },
+    {
+        "id": "f21b283ccfcb51e7",
+        "type": "function",
+        "z": "873b4c40a14e7817",
+        "name": "Live tracking info to buyer",
+        "func": "msg.topic = \"Provided tracking info with trackingID \" + msg.payload.shippingDetails.trackingID;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 1160,
+        "wires": [
+            [
+                "2dc9901d90713336",
+                "d47a8c7046cbeaa5"
+            ]
+        ],
+        "icon": "font-awesome/fa-truck"
+    },
+    {
+        "id": "2dc9901d90713336",
+        "type": "debug",
+        "z": "873b4c40a14e7817",
+        "name": "S:Live tracking info to buyer",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "d47a8c7046cbeaa5",
+        "type": "link out",
+        "z": "873b4c40a14e7817",
+        "name": "Live tracking info to buyer",
+        "links": [
+            "3993e61efcaf1263"
+        ],
+        "x": 695,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "3993e61efcaf1263",
+        "type": "link in",
+        "z": "08b7539e1107be27",
+        "name": "Live tracking info from shipping",
+        "links": [
+            "d47a8c7046cbeaa5"
+        ],
+        "x": 195,
+        "y": 920,
+        "wires": [
+            [
+                "0292c2e2addcd369"
+            ]
+        ]
+    },
+    {
+        "id": "0292c2e2addcd369",
+        "type": "debug",
+        "z": "08b7539e1107be27",
+        "name": "B:Live tracking info from shipping",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "42b62e33dc452a17",
+        "type": "link in",
+        "z": "873b4c40a14e7817",
+        "name": "Item received at buyer end",
+        "links": [
+            "da038585c4324967"
+        ],
+        "x": 195,
+        "y": 1360,
+        "wires": [
+            [
+                "bce6bba2ecb5860e"
+            ]
+        ]
+    },
+    {
+        "id": "8025805d7fe9f8e8",
+        "type": "link out",
+        "z": "873b4c40a14e7817",
+        "name": "Item received status to merchant",
+        "links": [
+            "62b2074038172be0"
+        ],
+        "x": 815,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "d07a98d00baa6da6",
+        "type": "function",
+        "z": "873b4c40a14e7817",
+        "name": "Delivered notification to Merchant",
+        "func": "msg.topic = \"Provided delivered notication\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 1360,
+        "wires": [
+            [
+                "43470bfe87b0d5cb",
+                "8025805d7fe9f8e8"
+            ]
+        ],
+        "icon": "font-awesome/fa-truck"
+    },
+    {
+        "id": "e38b3eea2fcdd036",
+        "type": "change",
+        "z": "873b4c40a14e7817",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.paymentDetails.paymentStatus",
+                "pt": "msg",
+                "to": "paymentStatus",
+                "tot": "global"
+            },
+            {
+                "t": "set",
+                "p": "orderState",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 160,
+        "wires": [
+            [
+                "de8860f583739d32"
+            ]
+        ]
+    },
+    {
+        "id": "bce6bba2ecb5860e",
+        "type": "change",
+        "z": "873b4c40a14e7817",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.paymentDetails.paymentStatus",
+                "pt": "msg",
+                "to": "paymentStatus",
+                "tot": "global"
+            },
+            {
+                "t": "set",
+                "p": "orderState",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 1360,
+        "wires": [
+            [
+                "d07a98d00baa6da6"
+            ]
+        ]
+    },
+    {
+        "id": "43470bfe87b0d5cb",
+        "type": "debug",
+        "z": "873b4c40a14e7817",
+        "name": "S:Delivered notification to merchant",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 890,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "0678d29606b74feb",
+        "type": "switch",
+        "z": "63f6b7c015bf72cf",
+        "name": "",
+        "property": "payload.paymentDetails.paymentStatus",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "inProcess",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "onHold",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 770,
+        "y": 540,
+        "wires": [
+            [
+                "0d4b75ddb6ca77fe"
+            ],
+            [
+                "c84e1d8130c7bdac"
+            ]
+        ]
+    },
+    {
+        "id": "c84e1d8130c7bdac",
+        "type": "link out",
+        "z": "63f6b7c015bf72cf",
+        "name": "",
+        "links": [
+            "4f8704b638d52a15"
+        ],
+        "x": 875,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "c37870629428c958",
+        "type": "inject",
+        "z": "08b7539e1107be27",
+        "name": "Ask for order status",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "orderState",
+        "payloadType": "global",
+        "x": 150,
+        "y": 1000,
+        "wires": [
+            [
+                "d7d0dd252e484517"
+            ]
+        ]
+    },
+    {
+        "id": "d7d0dd252e484517",
+        "type": "function",
+        "z": "08b7539e1107be27",
+        "name": "order status request",
+        "func": "if(msg.payload){\n    msg.topic = \"order status requested from eBay website\";\n    msg.payload = {};\n    return msg;\n}\nelse{\n    msg.topic = \"The order is not yet placed. In order to provide the shipping status the order needs to be placed.\";\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 1000,
+        "wires": [
+            [
+                "0b6a1cbb7d5d9816",
+                "8c4bb16a6fe68dcf"
+            ]
+        ],
+        "icon": "font-awesome/fa-user-circle-o"
+    },
+    {
+        "id": "0b6a1cbb7d5d9816",
+        "type": "debug",
+        "z": "08b7539e1107be27",
+        "name": "order status request",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "c1e4ba93ee16f808",
+        "type": "link out",
+        "z": "08b7539e1107be27",
+        "name": "Order status request to eBay",
+        "links": [
+            "1eaa7b513ce987c0"
+        ],
+        "x": 755,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "65878f090bd096e5",
+        "type": "link in",
+        "z": "08b7539e1107be27",
+        "name": "Order status from eBay",
+        "links": [
+            "009bc9c47bfaf067"
+        ],
+        "x": 195,
+        "y": 1200,
+        "wires": [
+            [
+                "84cc77d95cb347bc"
+            ]
+        ]
+    },
+    {
+        "id": "1eaa7b513ce987c0",
+        "type": "link in",
+        "z": "63f6b7c015bf72cf",
+        "name": "Order status request from Buyer",
+        "links": [
+            "c1e4ba93ee16f808"
+        ],
+        "x": 175,
+        "y": 700,
+        "wires": [
+            [
+                "128ea9b3499160b9"
+            ]
+        ]
+    },
+    {
+        "id": "128ea9b3499160b9",
+        "type": "change",
+        "z": "63f6b7c015bf72cf",
+        "name": "context",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "orderState",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 700,
+        "wires": [
+            [
+                "3a8d772281d6090e"
+            ]
+        ]
+    },
+    {
+        "id": "3a8d772281d6090e",
+        "type": "function",
+        "z": "63f6b7c015bf72cf",
+        "name": "Order status",
+        "func": "msg.topic = \"Provided order status as \" + msg.payload.orderDetails.status;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 700,
+        "wires": [
+            [
+                "3b26be19d9fe2ca5",
+                "009bc9c47bfaf067"
+            ]
+        ],
+        "icon": "font-awesome/fa-shopping-cart"
+    },
+    {
+        "id": "3b26be19d9fe2ca5",
+        "type": "debug",
+        "z": "63f6b7c015bf72cf",
+        "name": "Order status to buyer",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "009bc9c47bfaf067",
+        "type": "link out",
+        "z": "63f6b7c015bf72cf",
+        "name": "Order status to buyer",
+        "links": [
+            "65878f090bd096e5"
+        ],
+        "x": 655,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "84cc77d95cb347bc",
+        "type": "debug",
+        "z": "08b7539e1107be27",
+        "name": "Order status from eBay",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 390,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "8c4bb16a6fe68dcf",
+        "type": "switch",
+        "z": "08b7539e1107be27",
+        "name": "",
+        "property": "orderState.orderDetails",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 1000,
+        "wires": [
+            [
+                "c1e4ba93ee16f808"
+            ]
+        ]
+    }
+]

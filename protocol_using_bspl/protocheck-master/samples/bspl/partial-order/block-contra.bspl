@@ -1,0 +1,14 @@
+protocol Block-Contra {
+ $\msf{roles}$ A, B
+ $\msf{parameters}$ $\msf{out}$ ID key, $\msf{out}$ value, $\msf{out}$ enable, out done
+
+  A $\mapsto$ B: start [$\msf{out}$ ID]
+
+  A $\mapsto$ B: block [$\msf{in}$ ID, $\msf{out}$ value]
+
+  A $\mapsto$ B: prepare [$\msf{in}$ ID, $\msf{out}$ enable]
+
+  B $\mapsto$ A: contra [$\msf{in}$ ID, $\msf{in}$ enable, $\msf{out}$ value]
+
+  B $\mapsto$ A: end [$\msf{in}$ ID, $\msf{in}$ value, $\msf{out}$ done]
+}

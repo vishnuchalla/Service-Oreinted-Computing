@@ -1,0 +1,197 @@
+Script started on Thu Nov  4 14:06:20 2021
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                            [0m[27m[24m[Jvishnuchalla@Vishnus-Air BuyerSeller % [K[?2004hexit./start.sh[10Dpython3 Ebay_A.py[17D./start.sh       [?2004l
+Starting eBay...
+Starting PayPal...
+Starting Shipping...
+Starting Merchant...
+2021-11-04 14:06:24,502 receiver: Listening on ('0.0.0.0', 8002)
+2021-11-04 14:06:24,502 receiver: Listening on ('0.0.0.0', 8003)
+2021-11-04 14:06:24,502 receiver: Listening on ('0.0.0.0', 8001)
+2021-11-04 14:06:24,502 receiver: Listening on ('0.0.0.0', 8004)
+Press any key to stop...
+2021-11-04 14:06:26,494 Buyer_A: Starting Buyer A...
+2021-11-04 14:06:26,498 receiver: Listening on ('0.0.0.0', 8005)
+2021-11-04 14:06:27,503 Buyer_A: placing order_ID1
+2021-11-04 14:06:27,506 Ebay_Org: order_ID1 Order received and waiting for the payment
+2021-11-04 14:06:28,502 Buyer_A: placing order_ID2
+2021-11-04 14:06:28,505 Ebay_Org: order_ID2 Order received and waiting for the payment
+2021-11-04 14:06:28,505 Buyer_A: submitting payment for the order_ID1
+2021-11-04 14:06:28,507 Ebay_Org: order_ID1 Order placed and payment done. So being forwarded to the merchant
+2021-11-04 14:06:28,509 Ebay_Org: order_ID1 Submitting payment request to the paypal
+2021-11-04 14:06:28,509 Merchant_A: order_ID1 Order received and acknowledged by the merchant
+2021-11-04 14:06:28,511 Paypal_Org: order_ID1 Payment request received by paypal. Putting the order payment on hold until the delivery
+2021-11-04 14:06:28,511 Ebay_Org: order_ID1 Order accepted by merchant and status is updated as in progress in eBay website
+2021-11-04 14:06:29,503 Buyer_A: placing order_ID3
+2021-11-04 14:06:29,504 Buyer_A: submitting buyer review for the order_ID2
+2021-11-04 14:06:29,506 Buyer_A: submitting buyer review for the order_ID1
+2021-11-04 14:06:29,506 Ebay_Org: order_ID3 Order received and waiting for the payment
+2021-11-04 14:06:29,507 Ebay_Org: order_ID2 buyer transaction review cannot be submitted before both placing order and submitting payment are done
+2021-11-04 14:06:29,508 Ebay_Org: order_ID1 transaction review submitted by the buyer
+2021-11-04 14:06:30,510 Buyer_A: cancel requested for the order_ID3
+2021-11-04 14:06:30,510 Buyer_A: submitting payment for the order_ID2
+2021-11-04 14:06:30,512 Ebay_Org: order_ID3 Order cancelled on eBay side as per the buyer request. No refund provided because there was not payment done for this order
+2021-11-04 14:06:30,513 Ebay_Org: order_ID2 Order placed and payment done. So being forwarded to the merchant
+2021-11-04 14:06:30,515 Ebay_Org: order_ID2 Submitting payment request to the paypal
+2021-11-04 14:06:30,516 Paypal_Org: order_ID2 Payment request received by paypal. Putting the order payment on hold until the delivery
+2021-11-04 14:06:31,503 Buyer_A: placing order_ID4
+2021-11-04 14:06:31,504 Buyer_A: placing order_ID6
+2021-11-04 14:06:31,506 Ebay_Org: order_ID4 Order received and waiting for the payment
+2021-11-04 14:06:31,507 Ebay_Org: order_ID6 Order received and waiting for the payment
+2021-11-04 14:06:31,515 Merchant_A: order_ID1 Sending order to shipping service
+2021-11-04 14:06:31,516 Merchant_A: order_ID1 Notification received at the merchant end on payment hold
+2021-11-04 14:06:31,516 Merchant_A: order_ID1 submitting merchant review for the order
+2021-11-04 14:06:31,516 Merchant_A: order_ID2 Order received and acknowledged by the merchant
+2021-11-04 14:06:31,517 Ebay_Org: order_ID1 transaction review submitted by the merchant
+2021-11-04 14:06:31,518 Shipping_A: order_ID1 Received shipping request from merchant
+2021-11-04 14:06:31,518 Shipping_A: order_ID1 Providing tracking info to the merchant
+2021-11-04 14:06:31,518 Shipping_A: order_ID1 Packing and shipping the item to buyer
+2021-11-04 14:06:31,518 Ebay_Org: order_ID2 Order accepted by merchant and status is updated as in progress in eBay website
+2021-11-04 14:06:32,510 Buyer_A: submitting payment for the order_ID4
+2021-11-04 14:06:32,510 Buyer_A: submitting payment for the order_ID6
+2021-11-04 14:06:32,513 Ebay_Org: order_ID4 Order placed and payment done. So being forwarded to the merchant
+2021-11-04 14:06:32,515 Ebay_Org: order_ID6 Order placed and payment done. So being forwarded to the merchant
+2021-11-04 14:06:32,516 Ebay_Org: order_ID4 Submitting payment request to the paypal
+2021-11-04 14:06:32,517 Ebay_Org: order_ID6 Submitting payment request to the paypal
+2021-11-04 14:06:32,517 Paypal_Org: order_ID4 Payment request received by paypal. Putting the order payment on hold until the delivery
+2021-11-04 14:06:32,519 Paypal_Org: order_ID6 Payment request received by paypal. Putting the order payment on hold until the delivery
+2021-11-04 14:06:33,516 Buyer_A: submitting buyer review for the order_ID4
+2021-11-04 14:06:33,517 Buyer_A: submitting buyer review for the order_ID6
+2021-11-04 14:06:33,519 Ebay_Org: order_ID4 transaction review submitted by the buyer
+2021-11-04 14:06:33,521 Ebay_Org: order_ID6 transaction review submitted by the buyer
+2021-11-04 14:06:34,522 Merchant_A: order_ID2 Sending order to shipping service
+2021-11-04 14:06:34,523 Buyer_A: cancel requested for the order_ID4
+2021-11-04 14:06:34,523 Merchant_A: order_ID2 Notification received at the merchant end on payment hold
+2021-11-04 14:06:34,525 Ebay_Org: order_ID4 Order cancelled before shipping. so initiating refund
+2021-11-04 14:06:34,526 Merchant_A: order_ID1 Tracking info shared with merchant from the shipping service
+2021-11-04 14:06:34,526 Merchant_A: order_ID4 Order received and acknowledged by the merchant
+2021-11-04 14:06:34,528 Shipping_A: order_ID2 Received shipping request from merchant
+2021-11-04 14:06:34,528 Shipping_A: order_ID2 Providing tracking info to the merchant
+2021-11-04 14:06:34,528 Shipping_A: order_ID2 Packing and shipping the item to buyer
+2021-11-04 14:06:34,528 Paypal_Org: order_ID4 deleting the previous payment request to merchant which was on hold
+2021-11-04 14:06:34,528 Ebay_Org: order_ID1 tracking id updated in the eBay website. notifying shipping details to the buyer
+2021-11-04 14:06:34,529 Paypal_Org: order_ID4 performing refund to the buyer for a cancelled order
+2021-11-04 14:06:34,529 Ebay_Org: order_ID4 Order accepted by merchant and status is updated as in progress in eBay website
+2021-11-04 14:06:36,503 Buyer_A: placing order_ID5
+2021-11-04 14:06:36,505 Ebay_Org: order_ID5 Order received and waiting for the payment
+2021-11-04 14:06:37,509 Buyer_A: submitting payment for the order_ID5
+2021-11-04 14:06:37,511 Ebay_Org: order_ID5 Order placed and payment done. So being forwarded to the merchant
+2021-11-04 14:06:37,513 Ebay_Org: order_ID5 Submitting payment request to the paypal
+2021-11-04 14:06:37,515 Paypal_Org: order_ID5 Payment request received by paypal. Putting the order payment on hold until the delivery
+2021-11-04 14:06:37,530 Merchant_A: order_ID4 Not taking any further action on the order because it is cancelled before sending to shipping
+2021-11-04 14:06:37,530 Merchant_A: order_ID6 Order received and acknowledged by the merchant
+2021-11-04 14:06:37,531 Ebay_Org: order_ID6 Order accepted by merchant and status is updated as in progress in eBay website
+2021-11-04 14:06:39,532 Buyer_A: order_ID1 Item received by the buyer
+2021-11-04 14:06:39,533 Buyer_A: order_ID4 refund received by the buyer for the cancelled order
+2021-11-04 14:06:39,534 Buyer_A: order_ID1 Received shipping details and tracking id from eBay website
+2021-11-04 14:06:39,536 Shipping_A: order_ID1 Confirming delivery with the merchant
+2021-11-04 14:06:39,538 Shipping_A: order_ID1 Confirming delivery with the merchant
+2021-11-04 14:06:39,538 adapter: (Shipping) Skipped duplicate messages: {sendDeliveryConfirmation(orderID='order_ID1',buyerID='buyer id',merchantID='merchant id',trackingID='tracking id',deliveryConfirmation='success')}
+2021-11-04 14:06:40,536 Merchant_A: order_ID6 Sending order to shipping service
+2021-11-04 14:06:40,537 Merchant_A: order_ID4 Notification received at the merchant end on payment hold
+2021-11-04 14:06:40,538 Merchant_A: order_ID6 Notification received at the merchant end on payment hold
+2021-11-04 14:06:40,541 Merchant_A: order_ID4 notification received at merchant end about the cancelled order
+2021-11-04 14:06:40,541 Merchant_A: order_ID2 Tracking info shared with merchant from the shipping service
+2021-11-04 14:06:40,541 Merchant_A: order_ID2 submitting merchant review for the order
+2021-11-04 14:06:40,542 Merchant_A: order_ID5 Order received and acknowledged by the merchant
+2021-11-04 14:06:40,543 Shipping_A: order_ID6 Received shipping request from merchant
+2021-11-04 14:06:40,544 Shipping_A: order_ID6 Providing tracking info to the merchant
+2021-11-04 14:06:40,544 Shipping_A: order_ID6 Packing and shipping the item to buyer
+2021-11-04 14:06:40,544 Ebay_Org: order_ID2 tracking id updated in the eBay website. notifying shipping details to the buyer
+2021-11-04 14:06:40,544 Ebay_Org: order_ID2 transaction review submitted by the merchant
+2021-11-04 14:06:40,546 Ebay_Org: order_ID5 Order accepted by merchant and status is updated as in progress in eBay website
+2021-11-04 14:06:43,548 Merchant_A: order_ID5 Sending order to shipping service
+2021-11-04 14:06:43,549 Merchant_A: order_ID5 Notification received at the merchant end on payment hold
+2021-11-04 14:06:43,549 Shipping_A: order_ID6 Identified a defective item. Reporting it to the merchant
+2021-11-04 14:06:43,550 Merchant_A: order_ID1 sending delivery confirmation to the eBay website
+2021-11-04 14:06:43,553 Merchant_A: order_ID6 Tracking info shared with merchant from the shipping service
+2021-11-04 14:06:43,555 Shipping_A: order_ID5 Received shipping request from merchant
+2021-11-04 14:06:43,555 Shipping_A: order_ID5 Providing tracking info to the merchant
+2021-11-04 14:06:43,555 Shipping_A: order_ID5 Packing and shipping the item to buyer
+2021-11-04 14:06:43,556 Ebay_Org: order_ID1 Delivery confirmation received. Requesting paypal to release payment hold
+2021-11-04 14:06:43,557 Ebay_Org: order_ID6 tracking id updated in the eBay website. notifying shipping details to the buyer
+2021-11-04 14:06:43,557 Merchant_A: order_ID6 Defective item notified by the shipping. Updating the same to eBay
+2021-11-04 14:06:43,557 Merchant_A: order_ID6 submitting merchant review for the order
+2021-11-04 14:06:43,558 Paypal_Org: order_ID1 Releasing the payment on hold. As the eBay has confirmed the delivery
+2021-11-04 14:06:43,559 Merchant_A: order_ID5 Tracking info shared with merchant from the shipping service
+2021-11-04 14:06:43,559 Paypal_Org: order_ID1 Releasing the payment on hold. As the eBay has confirmed the delivery
+2021-11-04 14:06:43,559 Ebay_Org: order_ID6 Defective item notified by the merchant. Requesting refund with paypal for this defective item
+2021-11-04 14:06:43,559 adapter: (Paypal) Skipped duplicate messages: {releasePayment(orderID='order_ID1',itemPrice='item price',merchantID='merchant id',releaseHold='true',deliveryConfirmation='success')}
+2021-11-04 14:06:43,560 Ebay_Org: order_ID6 transaction review submitted by the merchant
+2021-11-04 14:06:43,560 Merchant_A: order_ID1 Payment credit notification received by merchant
+2021-11-04 14:06:43,561 Paypal_Org: order_ID6 deleting the previous payment request to merchant which was on hold
+2021-11-04 14:06:43,561 Paypal_Org: order_ID6 performing refund to the buyer for a defective order
+2021-11-04 14:06:43,561 Ebay_Org: order_ID5 tracking id updated in the eBay website. notifying shipping details to the buyer
+2021-11-04 14:06:44,541 Buyer_A: order_ID2 Item received by the buyer
+2021-11-04 14:06:44,542 Buyer_A: order_ID2 Received shipping details and tracking id from eBay website
+2021-11-04 14:06:44,543 Buyer_A: order_ID6 Received shipping details and tracking id from eBay website
+2021-11-04 14:06:44,543 Buyer_A: order_ID6 refund received by the buyer for the defective order
+2021-11-04 14:06:44,544 Buyer_A: order_ID5 Received shipping details and tracking id from eBay website
+2021-11-04 14:06:46,562 Shipping_A: order_ID2 Confirming delivery with the merchant
+2021-11-04 14:06:46,564 Shipping_A: order_ID2 Confirming delivery with the merchant
+2021-11-04 14:06:46,564 adapter: (Shipping) Skipped duplicate messages: {sendDeliveryConfirmation(orderID='order_ID2',buyerID='buyer id',merchantID='merchant id',trackingID='tracking id',deliveryConfirmation='success')}
+2021-11-04 14:06:46,564 Merchant_A: order_ID2 sending delivery confirmation to the eBay website
+2021-11-04 14:06:46,566 Ebay_Org: order_ID2 Delivery confirmation received. Requesting paypal to release payment hold
+2021-11-04 14:06:46,568 Paypal_Org: order_ID2 Releasing the payment on hold. As the eBay has confirmed the delivery
+2021-11-04 14:06:46,568 Paypal_Org: order_ID2 Releasing the payment on hold. As the eBay has confirmed the delivery
+2021-11-04 14:06:46,569 adapter: (Paypal) Skipped duplicate messages: {releasePayment(orderID='order_ID2',itemPrice='item price',merchantID='merchant id',releaseHold='true',deliveryConfirmation='success')}
+2021-11-04 14:06:46,569 Merchant_A: order_ID2 Payment credit notification received by merchant
+2021-11-04 14:06:47,514 Buyer_A: cancel requested for the order_ID5
+2021-11-04 14:06:47,517 Ebay_Org: order_ID5 Order cannot be cancelled now as it is already sent for shipping
+2021-11-04 14:06:48,521 Buyer_A: submitting buyer review for the order_ID5
+2021-11-04 14:06:48,523 Ebay_Org: order_ID5 transaction review submitted by the buyer
+2021-11-04 14:06:51,570 Buyer_A: order_ID5 Item received by the buyer
+2021-11-04 14:06:51,574 Shipping_A: order_ID5 Confirming delivery with the merchant
+2021-11-04 14:06:51,575 Shipping_A: order_ID5 Confirming delivery with the merchant
+2021-11-04 14:06:51,575 adapter: (Shipping) Skipped duplicate messages: {sendDeliveryConfirmation(orderID='order_ID5',buyerID='buyer id',merchantID='merchant id',trackingID='tracking id',deliveryConfirmation='success')}
+2021-11-04 14:06:51,576 Merchant_A: order_ID5 sending delivery confirmation to the eBay website
+2021-11-04 14:06:51,578 Ebay_Org: order_ID5 Delivery confirmation received. Requesting paypal to release payment hold
+2021-11-04 14:06:51,583 Paypal_Org: order_ID5 Releasing the payment on hold. As the eBay has confirmed the delivery
+2021-11-04 14:06:51,583 Paypal_Org: order_ID5 Releasing the payment on hold. As the eBay has confirmed the delivery
+2021-11-04 14:06:51,583 adapter: (Paypal) Skipped duplicate messages: {releasePayment(orderID='order_ID5',itemPrice='item price',merchantID='merchant id',releaseHold='true',deliveryConfirmation='success')}
+2021-11-04 14:06:51,584 Merchant_A: order_ID5 Payment credit notification received by merchant
+Press any key to stop...
+2021-11-04 14:06:55,647 aiorun: Stopping the loop
+2021-11-04 14:06:55,876 Buyer_B: Starting Buyer B...
+2021-11-04 14:06:55,879 receiver: Listening on ('0.0.0.0', 8005)
+2021-11-04 14:06:56,884 Buyer_B: placing order_ID7
+2021-11-04 14:06:56,887 Ebay_Org: order_ID7 Order received and waiting for the payment
+2021-11-04 14:06:57,890 Buyer_B: submitting payment for the order_ID7
+2021-11-04 14:06:57,893 Ebay_Org: order_ID7 Order placed and payment done. So being forwarded to the merchant
+2021-11-04 14:06:57,894 Ebay_Org: order_ID7 Submitting payment request to the paypal
+2021-11-04 14:06:57,895 Merchant_A: order_ID7 Order rejected by merchant due to out of stock!
+2021-11-04 14:06:57,896 Paypal_Org: order_ID7 Payment request received by paypal. Putting the order payment on hold until the delivery
+2021-11-04 14:06:57,897 Ebay_Org: order_ID7 Notifying about order rejection to the buyer
+2021-11-04 14:06:57,898 Merchant_A: order_ID7 Notification received at the merchant end on payment hold
+2021-11-04 14:06:57,898 Buyer_B: order_ID7 Notification received at buyer end about merchant rejected order
+2021-11-04 14:06:58,896 Buyer_B: submitting buyer review for the order_ID7
+2021-11-04 14:06:59,904 Ebay_Org: order_ID7 transaction review submitted by the buyer
+2021-11-04 14:06:59,905 Paypal_Org: order_ID7 deleting the previous payment request to merchant which was on hold
+2021-11-04 14:06:59,905 Paypal_Org: order_ID7 performing refund to the buyer for a cancelled order
+2021-11-04 14:06:59,907 Buyer_B: order_ID7 refund received by the buyer for the cancelled order
+2021-11-04 14:07:00,885 Buyer_B: placing order_ID8
+2021-11-04 14:07:00,888 Ebay_Org: order_ID8 Order received and waiting for the payment
+2021-11-04 14:07:01,892 Buyer_B: submitting payment for the order_ID8
+2021-11-04 14:07:01,895 Ebay_Org: order_ID8 Order placed and payment done. So being forwarded to the merchant
+2021-11-04 14:07:01,897 Ebay_Org: order_ID8 Submitting payment request to the paypal
+2021-11-04 14:07:01,897 Merchant_A: order_ID8 Order received and acknowledged by the merchant
+2021-11-04 14:07:01,898 Paypal_Org: order_ID8 Payment request received by paypal. Putting the order payment on hold until the delivery
+2021-11-04 14:07:01,899 Ebay_Org: order_ID8 Order accepted by merchant and status is updated as in progress in eBay website
+2021-11-04 14:07:02,893 Buyer_B: submitting buyer review for the order_ID8
+2021-11-04 14:07:02,896 Ebay_Org: order_ID8 transaction review submitted by the buyer
+2021-11-04 14:07:03,895 Buyer_B: cancel requested for the order_ID8
+2021-11-04 14:07:03,897 Ebay_Org: order_ID8 Order cancelled before shipping. so initiating refund
+2021-11-04 14:07:03,900 Paypal_Org: order_ID8 deleting the previous payment request to merchant which was on hold
+2021-11-04 14:07:03,900 Paypal_Org: order_ID8 performing refund to the buyer for a cancelled order
+2021-11-04 14:07:03,901 Buyer_B: order_ID8 refund received by the buyer for the cancelled order
+2021-11-04 14:07:04,904 Merchant_A: order_ID8 Not taking any further action on the order because it is cancelled before sending to shipping
+2021-11-04 14:07:04,906 Merchant_A: order_ID8 Notification received at the merchant end on payment hold
+2021-11-04 14:07:04,907 Merchant_A: order_ID8 notification received at merchant end about the cancelled order
+2021-11-04 14:07:09,152 aiorun: Stopping the loop
+2021-11-04 14:07:09,152 aiorun: Stopping the loop
+2021-11-04 14:07:09,152 aiorun: Stopping the loop
+
+2021-11-04 14:07:09,153 aiorun: Stopping the loop
+2021-11-04 14:07:09,153 aiorun: Stopping the loop
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                            [0m[27m[24m[Jvishnuchalla@Vishnus-Air BuyerSeller % [K[?2004heexit[?2004l
+
+Script done on Thu Nov  4 14:07:12 2021

@@ -1,0 +1,15 @@
+message
+"[INFO]	2021-11-21T20:26:05.878Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:26:05.970Z	5bda1b86-0282-4748-8b18-23fab6bd779a	Shipping: shipping request received: {""buyerID"": ""buyerID"", ""merchantID"": ""AXYESSDAS123"", ""orderID"": 3, ""buyerName"": ""buyerName"", ""itemName"": ""Spectrum TV"", ""shippingAddress"": ""shipping address"", ""merchantAccept"": true}
+"
+"[INFO]	2021-11-21T20:26:05.970Z	5bda1b86-0282-4748-8b18-23fab6bd779a	Shipping: providing the tracking details to the merchant: {'merchantID': 'AXYESSDAS123', 'buyerID': 'buyerID', 'orderID': 3, 'trackingID': 'trackingID'}
+"
+"[INFO]	2021-11-21T20:26:10.144Z	5bda1b86-0282-4748-8b18-23fab6bd779a	Shipping: packing and shipping the item to buyer: {'buyerID': 'buyerID', 'merchantID': 'AXYESSDAS123', 'orderID': 3, 'itemName': 'Spectrum TV', 'shippingAddress': 'shipping address'}
+"
+"[INFO]	2021-11-21T20:26:11.279Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:26:11.383Z	7604759e-69c9-4584-8ee6-e3cb7b12461c	Shipping: Delivery confirmation received from buyer: {'buyerID': 'buyerID', 'orderID': 3, 'merchantID': 'AXYESSDAS123', 'itemName': 'Spectrum TV', 'receivedDate': '11/19/2021'}
+"
+"[INFO]	2021-11-21T20:26:11.383Z	7604759e-69c9-4584-8ee6-e3cb7b12461c	Shipping: sending delivery confirmation to the merchant: {'merchantID': 'AXYESSDAS123', 'buyerID': 'buyerID', 'orderID': 3, 'receivedDate': '11/19/2021', 'deliveryConfirmation': 'delivery confirmation', 'trackingID': 'trackingID'}
+"

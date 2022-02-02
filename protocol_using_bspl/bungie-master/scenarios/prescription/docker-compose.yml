@@ -1,0 +1,78 @@
+version: "3.7"
+
+services:
+  host:
+    image: qoomon/docker-host
+    cap_add: [ 'NET_ADMIN', 'NET_RAW' ]
+    restart: on-failure
+    networks:
+      - bungie-net
+
+  patient:
+    build:
+      context: ..
+      dockerfile: agent.docker
+    image: agent
+    expose:
+      - 8000/udp
+    networks:
+      - bungie-net
+    volumes:
+      - type: bind
+        source: ./patient.py
+        target: /src/patient.py
+        read_only: true
+      - type: bind
+        source: ./configuration.py
+        target: /src/configuration.py
+        read_only: true
+      - type: bind
+        source: ./prescription.bspl
+        target: /src/prescription.bspl
+        read_only: true
+    entrypoint: python patient.py
+
+  doctor:
+    image: agent
+    expose:
+      - 8000/udp
+    networks:
+      - bungie-net
+    volumes:
+      - type: bind
+        source: ./doctor.py
+        target: /src/doctor.py
+        read_only: true
+      - type: bind
+        source: ./configuration.py
+        target: /src/configuration.py
+        read_only: true
+      - type: bind
+        source: ./prescription.bspl
+        target: /src/prescription.bspl
+        read_only: true
+    entrypoint: python doctor.py
+
+  pharmacist:
+    image: agent
+    expose:
+      - 8000/udp
+    networks:
+      - bungie-net
+    volumes:
+      - type: bind
+        source: ./pharmacist.py
+        target: /src/pharmacist.py
+        read_only: true
+      - type: bind
+        source: ./configuration.py
+        target: /src/configuration.py
+        read_only: true
+      - type: bind
+        source: ./prescription.bspl
+        target: /src/prescription.bspl
+        read_only: true
+    entrypoint: python pharmacist.py
+
+networks:
+  bungie-net:

@@ -1,0 +1,35 @@
+message
+"[INFO]	2021-11-21T18:39:34.508Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T18:39:34.611Z	079be3d6-33d6-4884-bdfa-4ed44a90bb27	Merchant: Quote request received: {""buyerID"": ""buyerID"", ""orderID"": 1, ""itemName"": ""Harry Potter Novel"", ""buyerName"": ""buyerName"", ""merchantID"": ""AXYESSDAS123""}
+"
+"[INFO]	2021-11-21T18:39:34.612Z	079be3d6-33d6-4884-bdfa-4ed44a90bb27	Merchant: Sending quote to the buyer: {'orderID': 1, 'buyerID': 'buyerID', 'itemName': 'Harry Potter Novel', 'buyerName': 'buyerName', 'quote': 'quote'}
+"
+"[INFO]	2021-11-21T18:39:36.716Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T18:39:36.803Z	c42a85ff-116b-4894-b0c8-cb7ffa2a3361	Merchant: Received buyer acceptance: {""orderID"": 1, ""buyerID"": ""buyerID"", ""quote"": ""quote"", ""buyerAccept"": ""buyerAcceptance""}
+"
+"[INFO]	2021-11-21T18:39:36.898Z	8cf74c2d-249f-4a11-ba5c-19d9a32a7b61	Merchant: Received order {""orderID"": 1, ""buyerID"": ""buyerID"", ""itemName"": ""Harry Potter Novel"", ""buyerName"": ""buyerName"", ""shippingAddress"": ""shipping address""} but pending payment
+"
+"[INFO]	2021-11-21T18:39:36.898Z	8cf74c2d-249f-4a11-ba5c-19d9a32a7b61	Merchant: Sending pending payment notification to buyer: {'orderID': 1, 'buyerID': 'buyerID', 'itemName': 'Harry Potter Novel', 'buyerName': 'buyerName', 'onHold': True}
+"
+"[INFO]	2021-11-21T18:39:39.138Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T18:39:39.242Z	500e929f-15d7-49c4-84e6-37acad1e5197	Merchant: Received payment for the order: {""orderID"": 1, ""buyerID"": ""buyerID"", ""itemName"": ""Harry Potter Novel"", ""itemPrice"": ""100USD"", ""paymentDone"": true}
+"
+"[INFO]	2021-11-21T18:39:39.242Z	500e929f-15d7-49c4-84e6-37acad1e5197	Merchant: Accepting the order
+"
+"[INFO]	2021-11-21T18:39:39.242Z	500e929f-15d7-49c4-84e6-37acad1e5197	Merchant: Sending order acceptance to buyer: {'buyerID': 'buyerID', 'orderID': 1, 'itemName': 'Harry Potter Novel', 'itemPrice': '100USD', 'shippingAddress': 'shipping address', 'merchantAccept': True}
+"
+"[INFO]	2021-11-21T18:39:42.318Z	500e929f-15d7-49c4-84e6-37acad1e5197	Merchant: Sending the order for shipping: {'buyerID': 'buyerID', 'merchantID': 'AXYESSDAS123', 'orderID': 1, 'buyerName': 'buyerName', 'itemName': 'Harry Potter Novel', 'shippingAddress': 'shipping address', 'merchantAccept': True}
+"
+"[INFO]	2021-11-21T18:39:44.344Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T18:39:44.432Z	630a13b8-a84a-4550-ab5c-3bf105629679	Merchant: Received tracking info from shipping: {""merchantID"": ""AXYESSDAS123"", ""buyerID"": ""buyerID"", ""orderID"": 1, ""trackingID"": ""trackingID""}
+"
+"[INFO]	2021-11-21T18:39:44.432Z	630a13b8-a84a-4550-ab5c-3bf105629679	Merchant: notifying buyer about shipping: {'buyerID': 'buyerID', 'orderID': 1, 'trackingID': 'trackingID', 'shippingStatus': 'shipping status'}
+"
+"[INFO]	2021-11-21T18:39:48.796Z	4ec8f597-5164-4d41-a929-8b02af6734ae	Merchant: Received delivery confirmation from the shipping: {""merchantID"": ""AXYESSDAS123"", ""buyerID"": ""buyerID"", ""orderID"": 1, ""receivedDate"": ""11/19/2021"", ""deliveryConfirmation"": ""delivery confirmation"", ""trackingID"": ""trackingID""}
+"
+"[INFO]	2021-11-21T18:39:48.796Z	4ec8f597-5164-4d41-a929-8b02af6734ae	Merchant: reminding buyer about the delivery: {'buyerID': 'buyerID', 'orderID': 1, 'trackingID': 'trackingID', 'deliveryConfirmation': 'delivery confirmation', 'remindMessage': 'reminder message to buyer'}
+"

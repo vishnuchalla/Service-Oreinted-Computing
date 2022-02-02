@@ -1,0 +1,63 @@
+message
+"[INFO]	2021-11-21T20:19:42.952Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:19:43.039Z	15239d1d-b15e-4adf-a64d-ff33a6ec93b5	Merchant: Quote request received: {""buyerID"": ""buyerID"", ""orderID"": 2, ""itemName"": ""Laptop Mac Book Air"", ""buyerName"": ""buyerName"", ""merchantID"": ""AXYESSDAS123""}
+"
+"[INFO]	2021-11-21T20:19:43.039Z	15239d1d-b15e-4adf-a64d-ff33a6ec93b5	Merchant: Sending quote to the buyer: {'orderID': 2, 'buyerID': 'buyerID', 'itemName': 'Laptop Mac Book Air', 'buyerName': 'buyerName', 'quote': 'quote'}
+"
+"[INFO]	2021-11-21T20:19:45.226Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:19:45.313Z	3e64b763-d72b-4485-9cdf-acac1a1dc305	Merchant: Received buyer acceptance: {""orderID"": 2, ""buyerID"": ""buyerID"", ""quote"": ""quote"", ""buyerAccept"": ""buyerAcceptance""}
+"
+"[INFO]	2021-11-21T20:19:45.415Z	e10e4b84-c11a-4097-9a2c-0dd159c5bf89	Merchant: Received order {""orderID"": 2, ""buyerID"": ""buyerID"", ""itemName"": ""Laptop Mac Book Air"", ""buyerName"": ""buyerName"", ""shippingAddress"": ""shipping address""} but pending payment
+"
+"[INFO]	2021-11-21T20:19:45.415Z	e10e4b84-c11a-4097-9a2c-0dd159c5bf89	Merchant: Sending pending payment notification to buyer: {'orderID': 2, 'buyerID': 'buyerID', 'itemName': 'Laptop Mac Book Air', 'buyerName': 'buyerName', 'onHold': True}
+"
+"[INFO]	2021-11-21T20:19:47.693Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:19:47.790Z	080e61d1-7fbe-47a5-9f22-8a15ac769468	Merchant: Received payment for the order: {""orderID"": 2, ""buyerID"": ""buyerID"", ""itemName"": ""Laptop Mac Book Air"", ""itemPrice"": ""100USD"", ""paymentDone"": true}
+"
+"[INFO]	2021-11-21T20:19:47.790Z	080e61d1-7fbe-47a5-9f22-8a15ac769468	Merchant: Accepting the order
+"
+"[INFO]	2021-11-21T20:19:47.790Z	080e61d1-7fbe-47a5-9f22-8a15ac769468	Merchant: Sending order acceptance to buyer: {'buyerID': 'buyerID', 'orderID': 2, 'itemName': 'Laptop Mac Book Air', 'itemPrice': '100USD', 'shippingAddress': 'shipping address', 'merchantAccept': True}
+"
+"[INFO]	2021-11-21T20:19:49.960Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:19:50.058Z	8084cdd6-50f9-49ab-84a1-4279e89b5ed8	Merchant: Received cancel order request from buyer: {""orderID"": 2, ""buyerID"": ""buyerID"", ""isCancelled"": true}
+"
+"[INFO]	2021-11-21T20:19:50.058Z	8084cdd6-50f9-49ab-84a1-4279e89b5ed8	Merchant: Cancelling the order as it is not yet sent for shipping
+"
+"[INFO]	2021-11-21T20:19:50.058Z	8084cdd6-50f9-49ab-84a1-4279e89b5ed8	Merchant: Performing refund for the cancelled order: {'orderID': 2, 'buyerID': 'buyerID', 'isCancelled': True, 'itemPrice': '100USD', 'cancelledRefund': '100USD'}
+"
+"[INFO]	2021-11-21T20:19:53.169Z	080e61d1-7fbe-47a5-9f22-8a15ac769468	Merchant: Not taking any further action on the order as it is cancelled.
+"
+"[INFO]	2021-11-21T20:25:59.533Z	f4fbecf7-fd8c-42e2-8bcd-bdb53e4f7152	Merchant: Quote request received: {""buyerID"": ""buyerID"", ""orderID"": 3, ""itemName"": ""Spectrum TV"", ""buyerName"": ""buyerName"", ""merchantID"": ""AXYESSDAS123""}
+"
+"[INFO]	2021-11-21T20:25:59.533Z	f4fbecf7-fd8c-42e2-8bcd-bdb53e4f7152	Merchant: Sending quote to the buyer: {'orderID': 3, 'buyerID': 'buyerID', 'itemName': 'Spectrum TV', 'buyerName': 'buyerName', 'quote': 'quote'}
+"
+"[INFO]	2021-11-21T20:25:59.872Z	e33643a9-f4d4-478b-b81d-398430a5a2c6	Merchant: Received buyer acceptance: {""orderID"": 3, ""buyerID"": ""buyerID"", ""quote"": ""quote"", ""buyerAccept"": ""buyerAcceptance""}
+"
+"[INFO]	2021-11-21T20:25:59.967Z	f780dd70-e08c-4312-a694-5f61e5299833	Merchant: Received order {""orderID"": 3, ""buyerID"": ""buyerID"", ""itemName"": ""Spectrum TV"", ""buyerName"": ""buyerName"", ""shippingAddress"": ""shipping address""} but pending payment
+"
+"[INFO]	2021-11-21T20:25:59.967Z	f780dd70-e08c-4312-a694-5f61e5299833	Merchant: Sending pending payment notification to buyer: {'orderID': 3, 'buyerID': 'buyerID', 'itemName': 'Spectrum TV', 'buyerName': 'buyerName', 'onHold': True}
+"
+"[INFO]	2021-11-21T20:26:01.373Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:26:01.463Z	f68eee11-e214-4124-ab8c-d639dab610a6	Merchant: Received payment for the order: {""orderID"": 3, ""buyerID"": ""buyerID"", ""itemName"": ""Spectrum TV"", ""itemPrice"": ""100USD"", ""paymentDone"": true}
+"
+"[INFO]	2021-11-21T20:26:01.463Z	f68eee11-e214-4124-ab8c-d639dab610a6	Merchant: Accepting the order
+"
+"[INFO]	2021-11-21T20:26:01.463Z	f68eee11-e214-4124-ab8c-d639dab610a6	Merchant: Sending order acceptance to buyer: {'buyerID': 'buyerID', 'orderID': 3, 'itemName': 'Spectrum TV', 'itemPrice': '100USD', 'shippingAddress': 'shipping address', 'merchantAccept': True}
+"
+"[INFO]	2021-11-21T20:26:04.646Z	f68eee11-e214-4124-ab8c-d639dab610a6	Merchant: Sending the order for shipping: {'buyerID': 'buyerID', 'merchantID': 'AXYESSDAS123', 'orderID': 3, 'buyerName': 'buyerName', 'itemName': 'Spectrum TV', 'shippingAddress': 'shipping address', 'merchantAccept': True}
+"
+"[INFO]	2021-11-21T20:26:06.966Z		Found credentials in environment variables.
+"
+"[INFO]	2021-11-21T20:26:07.052Z	7f4c5845-b88a-4867-8d2e-45163fa2cd51	Merchant: Received tracking info from shipping: {""merchantID"": ""AXYESSDAS123"", ""buyerID"": ""buyerID"", ""orderID"": 3, ""trackingID"": ""trackingID""}
+"
+"[INFO]	2021-11-21T20:26:07.052Z	7f4c5845-b88a-4867-8d2e-45163fa2cd51	Merchant: notifying buyer about shipping: {'buyerID': 'buyerID', 'orderID': 3, 'trackingID': 'trackingID', 'shippingStatus': 'shipping status'}
+"
+"[INFO]	2021-11-21T20:26:11.489Z	8f94bd9a-4088-4f9c-b5bf-0e8914dcb9dd	Merchant: Received delivery confirmation from the shipping: {""merchantID"": ""AXYESSDAS123"", ""buyerID"": ""buyerID"", ""orderID"": 3, ""receivedDate"": ""11/19/2021"", ""deliveryConfirmation"": ""delivery confirmation"", ""trackingID"": ""trackingID""}
+"
+"[INFO]	2021-11-21T20:26:11.489Z	8f94bd9a-4088-4f9c-b5bf-0e8914dcb9dd	Merchant: reminding buyer about the delivery: {'buyerID': 'buyerID', 'orderID': 3, 'trackingID': 'trackingID', 'deliveryConfirmation': 'delivery confirmation', 'remindMessage': 'reminder message to buyer'}
+"

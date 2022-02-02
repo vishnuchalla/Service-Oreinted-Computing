@@ -1,0 +1,9 @@
+Auction {
+  roles A, B // Auctioneer, Bidders
+  parameters out id key, out done
+  private bidID, bid
+
+  A ↦ B: Start[out id]
+  B ↦ A: Bid[in id, out bidID key, out bid, nil done]
+  A ↦ B: Stop[in id, out done]
+}
