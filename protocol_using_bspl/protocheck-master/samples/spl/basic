@@ -1,6 +1,0 @@
-BasicProtocol {
-  roles A, B
-  parameters out key key, out data
-  
-  A → B test [key :: out data]
-}
